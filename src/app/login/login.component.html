@@ -1,0 +1,20 @@
+
+  <StackLayout class=" m-x-15 m-y-auto">
+      <GridLayout rows="30, auto,auto" marginBottom="5">
+        <Label #newpwd row="1" text="&#xf0e0; EMAIL ID" fontSize="14"  class="fa"></Label>
+        <TextField secure="true" row="1"  (focus)="onFocus($event,newpwd)" (blur)="onBlur($event,newpwd)" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2"   name="newPassword" minlength="8" returnKeyType="next" required></TextField>
+      </GridLayout>
+
+      <GridLayout rows="30, auto,auto" marginBottom="5">
+        <Label #confirmpwd row="1" text="&#xf023; PASSWORD" fontSize="14"  class="fa"></Label>
+        <TextField secure="true" row="1"  (focus)="onFocus($event,confirmpwd)" (blur)="onBlur($event,confirmpwd)" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="confirmNewPassword" minlength="8" returnKeyType="done" required></TextField> 
+      </GridLayout>
+
+    <StackLayout class="p-t-10">
+      <Button text="Login" class="btn btn-danger btn-active btn-rounded-lg" height="45" width="100%"></Button> 
+    </StackLayout>
+    <StackLayout class="text-center">
+      <Label text="Not a member? Signup now" class="text-dark" (tap)="gotoSignup()"></Label>
+    </StackLayout>
+  </StackLayout>
+<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>
