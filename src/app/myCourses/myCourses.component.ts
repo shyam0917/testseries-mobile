@@ -1,14 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import frameModule = require("ui/frame");
 
 @Component({
-	selector: "Home",
+	selector: "MyCourses",
 	moduleId: module.id,
-	templateUrl: "./home.component.html"
+	templateUrl: "./myCourses.component.html"
 })
-export class HomeComponent implements OnInit {
+export class MyCoursesComponent implements OnInit {
 
 	constructor() {
 		// Use the component constructor to inject providers.
@@ -18,9 +17,9 @@ export class HomeComponent implements OnInit {
 		// Init your component properties here.
 	}
 
-    onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>app.getRootView();
-        sideDrawer.showDrawer();
-    }
+		onDrawerButtonTap(): void {
+		const sideDrawer = <RadSideDrawer>app.getRootView();
+		sideDrawer.showDrawer();
+	}
 
 }

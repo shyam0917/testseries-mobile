@@ -1,20 +1,34 @@
 
-  <StackLayout class=" m-x-15 m-y-auto">
-      <GridLayout rows="30, auto,auto" marginBottom="5">
-        <Label #newpwd row="1" text="&#xf0e0; EMAIL ID" fontSize="14"  class="fa"></Label>
-        <TextField secure="true" row="1"  (focus)="onFocus($event,newpwd)" (blur)="onBlur($event,newpwd)" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2"   name="newPassword" minlength="8" returnKeyType="next" required></TextField>
-      </GridLayout>
+<StackLayout class="m-x-auto m-t-30">
+	<Image src="res://projectlogo" stretch="none"></Image>
+</StackLayout>
 
-      <GridLayout rows="30, auto,auto" marginBottom="5">
-        <Label #confirmpwd row="1" text="&#xf023; PASSWORD" fontSize="14"  class="fa"></Label>
-        <TextField secure="true" row="1"  (focus)="onFocus($event,confirmpwd)" (blur)="onBlur($event,confirmpwd)" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="confirmNewPassword" minlength="8" returnKeyType="done" required></TextField> 
-      </GridLayout>
 
-    <StackLayout class="p-t-10">
-      <Button text="Login" class="btn btn-danger btn-active btn-rounded-lg" height="45" width="100%"></Button> 
-    </StackLayout>
-    <StackLayout class="text-center">
-      <Label text="Not a member? Signup now" class="text-dark" (tap)="gotoSignup()"></Label>
-    </StackLayout>
-  </StackLayout>
+<StackLayout class=" m-x-15 m-y-auto" id="set-background">
+	<GridLayout rows="30,auto,auto" marginBottom="5">
+		<Label #emal row="1" text="&#xf0e0; EMAIL ID" fontSize="14"  class="fa"></Label>
+		<TextField  row="1"  (focus)="onFocus($event,emal)" (blur)="onBlur($event,emal)" #email="ngModel" [(ngModel)]="loginInfo.email" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="email" returnKeyType="next" required [pattern]="emailpattern"></TextField>
+		<StackLayout row="2" *ngIf="email.invalid && email.touched" class="text-danger">
+			<Label *ngIf="email.errors?.required && email.touched" text="EmailId is required"></Label>
+			<Label *ngIf="email.errors?.pattern && email.touched" text="Enter valid EmailId"></Label>
+		</StackLayout>
+	</GridLayout>
+
+	<GridLayout rows="30, auto,auto" marginBottom="5">
+		<Label #pwd row="1" text="&#xf023; PASSWORD" fontSize="14"  class="fa"></Label>
+		<TextField secure="true" row="1"  (focus)="onFocus($event,pwd)" (blur)="onBlur($event,pwd)" #password="ngModel" [(ngModel)]="loginInfo.password" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="password" minlength="8" returnKeyType="done" required></TextField> 
+		<StackLayout row="2" *ngIf="password.invalid && email.touched" class="text-danger">
+			<Label *ngIf="password.errors?.required && password.touched" text="Password is required"></Label>
+			<Label *ngIf="password.errors?.minlength && password.touched" text="Password must be of atleast 8 characters"></Label>
+		</StackLayout>
+
+	</GridLayout>
+
+	<StackLayout class="p-t-10">
+		<Button text="Login" class="btn btn-danger btn-active btn-rounded-lg" [isEnabled]="email.valid && password.valid" height="45" width="100%" (tap)="onloginClick(loginInfo)"></Button> 
+	</StackLayout>
+	<StackLayout class="text-center" (tap)="gotoSignup()">
+		<Label text="Not a member? Signup now" class="text-dark"></Label>
+	</StackLayout>
+</StackLayout>
 <ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>

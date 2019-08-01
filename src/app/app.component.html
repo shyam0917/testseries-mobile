@@ -3,4 +3,51 @@ RadSideDrawer is a UI component part of the Progress NativeScript UI set of comp
 Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
 http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
 -->
-   <page-router-outlet></page-router-outlet>
+<!--   <page-router-outlet></page-router-outlet> -->
+<RadSideDrawer [drawerTransition]="sideDrawerTransition" gesturesEnabled="false">
+	<GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
+		<StackLayout row="0" class="sidedrawer-header">
+			<Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
+			<Label class="sidedrawer-header-brand" text="User Name"></Label>
+			<Label class="footnote" text="username@mail.com"></Label>
+		</StackLayout>
+
+		<ScrollView row="1">
+			<StackLayout class="sidedrawer-content">
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/home')" (tap)="onNavItemTap('/home')">
+					<Label col="0" text="&#xf015;" class="fa"></Label>
+					<Label col="1" text="Dashboard" class="p-r-10"></Label>
+				</GridLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/browse')" (tap)="onNavItemTap('/browse')">
+					<Label col="0" text="&#xf1ea;" class="fa"></Label>
+					<Label col="1" text="Post" class="p-r-10"></Label>
+				</GridLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/videoClasses')" (tap)="onNavItemTap('/videoClasses')">
+					<Label col="0" text="&#xf002;" class="fa"></Label>
+					<Label col="1" text="LiveClasses" class="p-r-10"></Label>
+				</GridLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/videoClasses')" (tap)="onNavItemTap('/videoClasses')">
+					<Label col="0" text="&#xf005;" class="fa"></Label>
+					<Label col="1" text="VideoCourses" class="p-r-10"></Label>
+				</GridLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/myCourses')" (tap)="onNavItemTap('/myCourses')">
+					<Label col="0" text="&#xf005;" class="fa"></Label>
+					<Label col="1" text="MyCourses" class="p-r-10"></Label>
+				</GridLayout>
+
+				<StackLayout class="hr-light"></StackLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/settings')" (tap)="onLogout()">
+					<Label col="0" text="&#xf013;" class="fa"></Label>
+					<Label col="1" text="Logout" class="p-r-10"></Label>
+				</GridLayout>
+			</StackLayout>
+		</ScrollView>
+	</GridLayout>
+
+	<page-router-outlet tkMainContent class="page page-content"></page-router-outlet>
+</RadSideDrawer>

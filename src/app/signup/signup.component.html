@@ -1,22 +1,44 @@
+<StackLayout class="m-x-auto m-t-30">
+	<Image src="res://projectlogo" stretch="none"></Image>
+</StackLayout>
 
 <StackLayout class=" m-x-15 m-y-auto">
 	<GridLayout rows="30, auto,auto" marginBottom="5">
-		<Label #email row="1" text="&#xf0e0; EMAIL ID" fontSize="14"  class="fa"></Label>
-		<TextField secure="true" row="1"  (focus)="onFocus($event,email)" (blur)="onBlur($event,email)" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2"   name="newPassword" minlength="8" returnKeyType="next" required></TextField>
+		<Label #nam row="1" text="&#xf007; NAME" fontSize="14"  class="fa"></Label>
+		<TextField row="1"  (focus)="onFocus($event,nam)" (blur)="onBlur($event,nam)" #name="ngModel" [(ngModel)]="signupInfo.name" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2"   name="name" minlength="8" returnKeyType="next" required></TextField>
+		<StackLayout row="2" *ngIf="name.invalid && name.touched" class="text-danger">
+			<Label *ngIf="name.errors?.required && name.touched" text="Name is required"></Label>
+		</StackLayout>
+	</GridLayout>
+
+	<GridLayout rows="30, auto,auto" marginBottom="5">
+		<Label #emal row="1" text="&#xf0e0; EMAIL ID" fontSize="14"  class="fa"></Label>
+		<TextField  row="1"  (focus)="onFocus($event,emal)" (blur)="onBlur($event,emal)" #email="ngModel" [(ngModel)]="signupInfo.email" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2"   name="email" returnKeyType="next" required [pattern]="emailpattern"></TextField>
+		<StackLayout row="2" *ngIf="email.invalid && email.touched" class="text-danger">
+			<Label *ngIf="email.errors?.required && email.touched" text="EmailId is required"></Label>
+			<Label *ngIf="email.errors?.pattern && email.touched" text="Enter valid EmailId"></Label>
+		</StackLayout>
+	</GridLayout>
+
+	<GridLayout rows="30, auto,auto" marginBottom="5">
+		<Label #mob row="1" text="&#xf10b; MOBILE" fontSize="14"  class="fa"></Label>
+		<TextField  row="1"  (focus)="onFocus($event,mob)" (blur)="onBlur($event,mob)" #mobile="ngModel" [(ngModel)]="signupInfo.mobile" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="mobile" returnKeyType="next" required [pattern]="mobilepattern"></TextField> 
+		<StackLayout row="2" *ngIf="mobile.invalid && mobile.touched" class="text-danger">
+			<Label *ngIf="mobile.errors?.pattern && mobile.touched" text="Enter valid Mobile No"></Label>
+		</StackLayout>
 	</GridLayout>
 
 	<GridLayout rows="30, auto,auto" marginBottom="5">
 		<Label #pwd row="1" text="&#xf023; PASSWORD" fontSize="14"  class="fa"></Label>
-		<TextField secure="true" row="1"  (focus)="onFocus($event,pwd)" (blur)="onBlur($event,pwd)" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="confirmNewPassword" minlength="8" returnKeyType="done" required></TextField> 
-	</GridLayout>
-
-	<GridLayout rows="30, auto,auto" marginBottom="5">
-		<Label #confirmpwd row="1" text="&#xf023; CONFIRM PASSWORD" fontSize="14"  class="fa"></Label>
-		<TextField secure="true" row="1"  (focus)="onFocus($event,confirmpwd)" (blur)="onBlur($event,confirmpwd)" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="confirmNewPassword" minlength="8" returnKeyType="done" required></TextField> 
+		<TextField secure="true" row="1"  (focus)="onFocus($event,pwd)" (blur)="onBlur($event,pwd)" #password="ngModel" [(ngModel)]="signupInfo.password" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="password" minlength="8" returnKeyType="done" required></TextField> 
+		<StackLayout row="2" *ngIf="password.invalid && email.touched" class="text-danger">
+			<Label *ngIf="password.errors?.required && password.touched" text="Password is required"></Label>
+			<Label *ngIf="password.errors?.minlength && password.touched" text="Password must be of atleast 8 characters"></Label>
+		</StackLayout>
 	</GridLayout>
 
 	<StackLayout class="p-t-10">
-		<Button text="SIGN UP" class="btn btn-danger btn-active btn-rounded-lg" height="45" width="100%"></Button> 
+		<Button text="SIGN UP" class="btn btn-danger btn-active btn-rounded-lg" height="45" width="100%" [isEnabled]="name.valid && email.valid && mobile.valid && password.valid" (tap)="onSubmit(signupInfo)"></Button> 
 	</StackLayout>
 	<StackLayout class="text-center">
 		<Label text="Already registered? Login here" class="text-dark" (tap)="gotologin()"></Label>

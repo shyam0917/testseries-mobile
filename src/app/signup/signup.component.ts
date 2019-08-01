@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from "nativescript-angular/router";
 import { Page } from "tns-core-modules/ui/page";
+import { RegisterService } from './../services/register.service';
+import { MessageService } from './../services/message.service';
+import { ValidationConfig } from './../config/validation-config.constants';
 
 import { Color } from "tns-core-modules/color";
 import { TextField } from "tns-core-modules/ui/text-field";
@@ -11,12 +14,26 @@ import { Label } from "tns-core-modules/ui/label";
 	selector: 'ns-signup',
 	templateUrl: './signup.component.html',
 	styleUrls: ['./signup.component.css'],
+	providers:[RegisterService, MessageService],
 	moduleId: module.id,
 })
 export class SignupComponent implements OnInit {
+	public signupInfo = {
+		name:"",
+		email: "",
+		mobile:"",
+		password: ""
+	};
+	public errorMessage: any;
+	public emailpattern=ValidationConfig.EMAIL_PATTERN;
+	public mobilepattern=ValidationConfig.MOB_NO_PATTERN;
+	public showVarification: boolean=false;
+	public isLoading:boolean=false;
 
 	constructor(private routerExtensions: RouterExtensions,
-		private page: Page) { }
+		private page: Page,
+		private messageService: MessageService,
+		private registerService:RegisterService) { }
 
 	ngOnInit() {
 		this.page.actionBarHidden = true;
@@ -27,7 +44,6 @@ export class SignupComponent implements OnInit {
 	}
 
 	onFocus(args: any,labelObj) {
-		// console.log(args)
 		const textField = <TextField>args.object;
 
 		// animate the label sliding up and less transparent.
@@ -41,7 +57,6 @@ export class SignupComponent implements OnInit {
 	}
 
 	onBlur(args: any, labelObj) {
-		// const label = this.label.nativeElement;
 		const textField = <TextField>args.object;
 
 		// if there is text in our input then don't move the label back to its initial position.
@@ -54,5 +69,27 @@ export class SignupComponent implements OnInit {
 		// reset border bottom color.
 		textField.borderBottomColor = new Color('#A9A9A9');
 	}
+
+	onSubmit(registerData){
+		debugger;
+		let student = registerData;
+		this.isLoading=true;
+		this.registerService.register(student).subscribe(data=>{
+			debugger;
+			this.isLoading=false;
+			if(data['success']){
+				this.messageService.onSuccess("Student Successfully Registered");
+			this.routerExtensions.navigate(['/login']);
+				this.showVarification=true;
+			}
+		},error=>{
+			this.isLoading=false;
+			this.errorMessage =error.error.msg;
+			this.messageService.onError(this.errorMessage);
+
+		})
+	}
+
+
 
 }

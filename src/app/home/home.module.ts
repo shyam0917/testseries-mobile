@@ -7,10 +7,10 @@ import { HomeComponent } from "./home.component";
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        HomeRoutingModule
+        HomeRoutingModule,
     ],
     declarations: [
-        HomeComponent
+        HomeComponent,
     ],
     schemas: [
         NO_ERRORS_SCHEMA

@@ -1,19 +1,19 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 
-import { FeaturedRoutingModule } from "./featured-routing.module";
-import { FeaturedComponent } from "./featured.component";
+import { MyCoursesRoutingModule } from "./myCourses-routing.module";
+import { MyCoursesComponent } from "./myCourses.component";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        FeaturedRoutingModule
+        MyCoursesRoutingModule
     ],
     declarations: [
-        FeaturedComponent
+        MyCoursesComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
-export class FeaturedModule { }
+export class MyCoursesModule { }
