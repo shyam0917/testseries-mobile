@@ -5,15 +5,15 @@ import { SearchRoutingModule } from "./videoClasses-routing.module";
 import { VideoClassesComponent } from "./videoClasses.component";
 
 @NgModule({
-    imports: [
-        NativeScriptCommonModule,
-        SearchRoutingModule
-    ],
-    declarations: [
-        VideoClassesComponent
-    ],
-    schemas: [
-        NO_ERRORS_SCHEMA
-    ]
+	imports: [
+		NativeScriptCommonModule,
+		SearchRoutingModule
+	],
+	declarations: [
+		VideoClassesComponent
+	],
+	schemas: [
+		NO_ERRORS_SCHEMA
+	]
 })
 export class VideoClassesModule { }

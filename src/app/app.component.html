@@ -7,9 +7,10 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 <RadSideDrawer [drawerTransition]="sideDrawerTransition" gesturesEnabled="false">
 	<GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
 		<StackLayout row="0" class="sidedrawer-header">
-			<Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
-			<Label class="sidedrawer-header-brand" text="User Name"></Label>
-			<Label class="footnote" text="username@mail.com"></Label>
+			<Image  class="sidedrawer-header-image" width=80 height=80 borderRadius="50" stretch="aspectFill" src="res://courseimg"></Image>
+			<!-- <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label> -->
+			<Label class="sidedrawer-header-brand" [text]="name"></Label>
+	<!-- 		<Label class="footnote" text="username@mail.com"></Label> -->
 		</StackLayout>
 
 		<ScrollView row="1">
@@ -24,13 +25,13 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 					<Label col="1" text="Post" class="p-r-10"></Label>
 				</GridLayout>
 
-				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/videoClasses')" (tap)="onNavItemTap('/videoClasses')">
-					<Label col="0" text="&#xf002;" class="fa"></Label>
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/liveClasses')" (tap)="onNavItemTap('/liveClasses')">
+					<Label col="0" text="&#xf025;" class="fa"></Label>
 					<Label col="1" text="LiveClasses" class="p-r-10"></Label>
 				</GridLayout>
 
 				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/videoClasses')" (tap)="onNavItemTap('/videoClasses')">
-					<Label col="0" text="&#xf005;" class="fa"></Label>
+					<Label col="0" text="&#xf16a;" class="fa"></Label>
 					<Label col="1" text="VideoCourses" class="p-r-10"></Label>
 				</GridLayout>
 
@@ -39,10 +40,15 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 					<Label col="1" text="MyCourses" class="p-r-10"></Label>
 				</GridLayout>
 
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/profile')" (tap)="onNavItemTap('/profile')">
+					<Label col="0" text="&#xf007;" class="fa"></Label>
+					<Label col="1" text="Profile" class="p-r-10"></Label>
+				</GridLayout>
+
 				<StackLayout class="hr-light"></StackLayout>
 
-				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/settings')" (tap)="onLogout()">
-					<Label col="0" text="&#xf013;" class="fa"></Label>
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="onLogout()">
+					<Label col="0" text="&#xf08b;" class="fa"></Label>
 					<Label col="1" text="Logout" class="p-r-10"></Label>
 				</GridLayout>
 			</StackLayout>

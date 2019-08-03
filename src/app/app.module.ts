@@ -5,9 +5,9 @@ import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { AuthorizationService } from "./services/authorization.service";
 import { MessageService } from "./services/message.service";
+import { YoutubePlayerModule } from 'nativescript-youtubeplayer/angular';
 
-import { NativeScriptHttpModule } from "nativescript-angular";
-import { AppRoutingModule } from "./app-routing.module";
+import { NativeScriptHttpModule } from "nativescript-angular";import { AppRoutingModule } from "./app-routing.module";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { AppComponent } from "./app.component";
 require("nativescript-localstorage");
@@ -22,11 +22,12 @@ require("nativescript-localstorage");
 	NgxPermissionsModule.forRoot(),
 	NativeScriptHttpClientModule,
 	NativeScriptHttpModule,
-	NativeScriptUISideDrawerModule
+	NativeScriptUISideDrawerModule,
+	YoutubePlayerModule
 	],
 	declarations: [
 	AppComponent,
-	SidebarComponent
+	SidebarComponent,
 	],
 	providers: [
     AuthorizationService,

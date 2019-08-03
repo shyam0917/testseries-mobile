@@ -8,21 +8,19 @@ import { CourseService } from './../services/course.service';
 import * as app from "tns-core-modules/application";
 
 @Component({
-	selector: "Search",
+	selector: "LiveClasses",
 	moduleId: module.id,
-	templateUrl: "./videoClasses.component.html"
+	templateUrl: "./liveClasses.component.html"
 })
-export class VideoClassesComponent implements OnInit {
-	public role: string="";
-	public cardPath: string= new CommonConfig().CARD_PATH;
+export class LiveClassesComponent implements OnInit {
+  public role: string="";
 	public urlPrefix: string="";
 	selectedStatus:any=[];
 	contentStatus: any=[];
-	courseData:any=[];
 	selectedStatusArry: any=[];
 	courses:any=[];
 	public dataArr: any;
-	public isLoading:boolean=false;
+	isLoading:boolean=false;
 	public totalItems: number = 0;
 	errorMessage: string;
 	successMessage: string;
@@ -45,37 +43,42 @@ export class VideoClassesComponent implements OnInit {
 		this.getCoursesByFilter();
 	}
 
-	 onDrawerButtonTap(): void {
-		const sideDrawer = <RadSideDrawer>app.getRootView();
-		sideDrawer.showDrawer();
-	}
-
-			// to get all courses from collections -
+		// to get add courses from collections -
 	getCoursesByFilter(){
 		let filter={};
 		if(this.selectedStatusArry.length){
 			filter['status']=this.selectedStatusArry.map(s=>s.id);
 		}
-		  filter['platform']="VideoCourses"
+		  filter['platform']="LiveClasses"
 		  filter['view']="released"
 		this.getAllCourses(filter);
 	}
 
-		//To get all Active course -
+//To get all Active course -
 	getAllCourses(filter: any={}){
-		this.isLoading=true;
+		this.messageService.showLoader.emit(true);
 		this.courseService.getAllCourses(filter).subscribe(response=>{
-			this.isLoading=false;
+			this.messageService.showLoader.emit(false);
 			if(response['data']){
 				this.courses=response['data'];
+				console.log(JSON.stringify(this.courses));
 				this.dataArr=response['data'];
 				this.totalItems=response['data'].length;
-
 			}
 		},error=>{
-			this.errorMessage=error.json().msg;
+			this.errorMessage=error.msg;
 			this.messageService.onError(this.errorMessage);
 		}
 		)
+	}
+
+	//To getting course details by id 
+	getCourseDetails(id:string){
+		this.courseDetails=this.courses.find(ele=>ele._id === id);
+	}
+
+	onDrawerButtonTap(): void {
+		const sideDrawer = <RadSideDrawer>app.getRootView();
+		sideDrawer.showDrawer();
 	}
 }

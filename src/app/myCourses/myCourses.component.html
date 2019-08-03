@@ -7,6 +7,15 @@
 	<Label class="action-bar-title text-left" text="My Couses"></Label>
 </ActionBar>
 
-<GridLayout class="page page-content">
-
-</GridLayout>
+<ListView class="list-group" [items]="courses" (itemTap)="onItemTapFirstList($event)" separatorColor="transparent">
+	<ng-template let-course="item">
+		<GridLayout rows="* auto" columns="*" class="list-group-item active" style="border:1;">
+			<Image row="0" col="0" src="res://courseimg"></Image>
+			<StackLayout row="1" col="0" backgroundColor="white" class="list-group-item">
+                <Label class="list-group-item-heading m-b-3" fontSize="20" [text]="course?.courseName"></Label>  <StackLayout class="hr-light m-t-3"></StackLayout>
+                <Button text="Play" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg m-t-4" (tap)="gotoPlaylist(course?.Videos,course?.courseName)"></Button> 
+            </StackLayout>
+				</GridLayout>
+			</ng-template>
+		</ListView>
+<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>

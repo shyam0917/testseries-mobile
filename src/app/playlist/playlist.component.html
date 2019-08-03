@@ -1,0 +1,21 @@
+<ActionBar class="action-bar">
+
+	<NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+	<ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+		ios.position="left">
+	</ActionItem>
+	<Label class="action-bar-title text-left" [text]="title"></Label>
+</ActionBar>
+
+<ScrollView>
+    <StackLayout>
+        <ListView height="150" [items]="courseData" class="list-group">
+            <ng-template let-course="item" let-i="index" let-odd="odd" let-even="even">
+              <GridLayout columns="auto,auto" class="list-group-item" (tap)="openPlayer(course?.videUrl)">
+               <Label col="0" text="&#xf16a;" fontSize="20" class="fa text-danger"></Label>
+               <Label col="1" [text]="course.title" textWrap="true" width="90%" class="p-l-5 m-l-5"></Label>
+              </GridLayout>
+            </ng-template>
+        </ListView>
+    </StackLayout>
+</ScrollView>

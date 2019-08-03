@@ -108,4 +108,14 @@ export class CourseService {
 				}));
 	}
 
+	  // get all assign courses of student  -
+	getAssignCourse(){
+		return this.http.get(AppConfig.API_HOST+'/api/courses/mycourse',this.authorizationService.authorization()).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
+
 }
