@@ -10,6 +10,7 @@ const routes: Routes = [
 	{ path: "videoPlayer", loadChildren: "~/app/video-player/video-player.module#VideoPlayerModule" },
 	{ path: "profile", loadChildren: "~/app/profile/profile.module#ProfileModule" },
 	{ path: "home", loadChildren: "~/app/home/home.module#HomeModule" },
+	{ path: "post", loadChildren: "~/app/post/post.module#PostModule" },
 	{ path: "sidebar", loadChildren: "~/app/sidebar/sidebar.module#SidebarModule" },
 	{ path: "videoClasses", loadChildren: "~/app/video-classes/videoClasses.module#VideoClassesModule" },
 	{ path: "myCourses", loadChildren: "~/app/myCourses/myCourses.module#MyCoursesModule" },

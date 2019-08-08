@@ -1,21 +1,53 @@
 <ActionBar class="action-bar">
-	<!-- 
-	Use the NavigationButton as a side-drawer button in Android
-	because ActionItems are shown on the right side of the ActionBar
-	-->
 	<NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-	<!-- 
-	Use the ActionItem for IOS with position set to left. Using the
-	NavigationButton as a side-drawer button in iOS is not possible,
-	because its function is to always navigate back in the application.
-	-->
 	<ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
 		ios.position="left">
 	</ActionItem>
 	<Label class="action-bar-title" text="Profile"></Label>
 </ActionBar>
 
-<GridLayout class="page page-content">
-	<Label class="page-icon fa" text="&#xf015;"></Label>
-	<Label class="page-placeholder" text="<!-- Page content goes here -->"></Label>
-</GridLayout>
+<TabView id="tabViewContainer">
+    <StackLayout *tabItem="{title: 'Profile'}">
+        <StackLayout>
+            <Label text="Profile" textWrap="true" class="m-15 h2 text-left" color="blue"></Label>
+        </StackLayout>
+    </StackLayout>
+    <StackLayout *tabItem="{title: 'Address'}">
+        <StackLayout>
+            <Label text="Change Password" textWrap="true" class="m-15 h2 text-left" color="blue"></Label>
+        </StackLayout>
+    </StackLayout>
+        <StackLayout *tabItem="{title: 'Change Password'}">
+       <StackLayout class=" m-x-15 m-y-auto">
+	<GridLayout rows="30, auto,auto" marginBottom="5">
+		<Label row="1" text="&#xf007; Enter Old Password" fontSize="14"  class="fa"></Label>
+		<TextField row="1"  #oldPassword="ngModel" [(ngModel)]="passwordInfo.oldPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="oldPassword" minlength="8" returnKeyType="next" required></TextField>
+		<StackLayout row="2" *ngIf="oldPassword.invalid && oldPassword.touched" class="text-danger">
+			<Label *ngIf="oldPassword.errors?.required && oldPassword.touched" text="Name is required"></Label>
+		</StackLayout>
+	</GridLayout>
+
+	<GridLayout rows="30, auto,auto" marginBottom="5">
+		<Label row="1" text="&#xf0e0; Enter New Password" fontSize="14"  class="fa"></Label>
+		<TextField  row="1" #newPassword="ngModel" [(ngModel)]="passwordInfo.newPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2"   name="newPassword" returnKeyType="next" required [pattern]="emailpattern"></TextField>
+		<StackLayout row="2" *ngIf="newPassword.invalid && newPassword.touched" class="text-danger">
+			<Label *ngIf="newPassword.errors?.required && newPassword.touched" text="EmailId is required"></Label>
+			<Label *ngIf="newPassword.errors?.pattern && newPassword.touched" text="Enter valid EmailId"></Label>
+		</StackLayout>
+	</GridLayout>
+
+	<GridLayout rows="30, auto,auto" marginBottom="5">
+		<!-- <Label row="1" text="&#xf10b; Enter Confirm Password" fontSize="14"  class="fa"></Label> -->
+		<TextField  row="1" #confirmPassword="ngModel" placeholder="hii" [(ngModel)]="passwordInfo.confirmPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="confirmPassword" returnKeyType="next" required [pattern]="mobilepattern"></TextField> 
+		<StackLayout row="2" *ngIf="confirmPassword.invalid && confirmPassword.touched" class="text-danger">
+			<Label *ngIf="confirmPassword.errors?.pattern && confirmPassword.touched" text="Enter valid Mobile No"></Label>
+		</StackLayout>
+	</GridLayout>
+
+
+	<StackLayout class="p-t-10">
+		<Button text="UPDATE" class="btn btn-primary btn-active btn-rounded-lg" height="45" width="100%" [isEnabled]="oldPassword.valid && newPassword.valid && confirmPassword.valid" (tap)="onSubmit(passwordInfo)"></Button> 
+	</StackLayout>
+</StackLayout>
+    </StackLayout>
+</TabView>

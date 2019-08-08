@@ -1,21 +1,14 @@
-
-
-<!-- <StackLayout style="padding-left:20; padding-right:20;" isUserInteractionEnabled="false">
-			<YoutubePlayer  #player id="player" width="100%" autoplay="1" isFullScreen="true" apiKey="AIzaSyAui5qi3ZIRR53FXodz8BRPXznp9ZQZLGc" src="g-GxsJ8VNkY"
-			 ></YoutubePlayer>
-			</StackLayout> -->
-
 			<ActionBar class="action-bar">
 
 				<NavigationButton icon="res://ic_arrow_back_white_24dp" (tap)="goBack()"></NavigationButton>
-				<Label class="action-bar-title text-left" text="hii"></Label>
+				<Label class="action-bar-title text-left" [text]="title"></Label>
 			</ActionBar>
 
 			<StackLayout style="padding-left:5; padding-right:5; background-color: black;" isUserInteractionEnabled="false">
 				<VideoPlayer
 				[src]="vr" (playbackReady)="callonReady()"
 				autoplay="true"
-				setVolume="1" width="100%"></VideoPlayer>
+				setVolume="1" style="padding-left:0; padding-right: 5" width="100%"></VideoPlayer>
 			</StackLayout>
 
 			<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>

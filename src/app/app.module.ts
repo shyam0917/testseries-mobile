@@ -5,7 +5,7 @@ import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { AuthorizationService } from "./services/authorization.service";
 import { MessageService } from "./services/message.service";
-import { YoutubePlayerModule } from 'nativescript-youtubeplayer/angular';
+import { ModalDialogService } from "nativescript-angular/modal-dialog";
 
 import { NativeScriptHttpModule } from "nativescript-angular";import { AppRoutingModule } from "./app-routing.module";
 import { SidebarComponent } from "./sidebar/sidebar.component";
@@ -23,7 +23,6 @@ require("nativescript-localstorage");
 	NativeScriptHttpClientModule,
 	NativeScriptHttpModule,
 	NativeScriptUISideDrawerModule,
-	YoutubePlayerModule
 	],
 	declarations: [
 	AppComponent,
@@ -31,7 +30,8 @@ require("nativescript-localstorage");
 	],
 	providers: [
     AuthorizationService,
-    MessageService
+    MessageService,
+    ModalDialogService
     ],
 	schemas: [
 	NO_ERRORS_SCHEMA

@@ -11,7 +11,7 @@ import * as app from "tns-core-modules/application";
 	templateUrl: "./myCourses.component.html"
 })
 export class MyCoursesComponent implements OnInit {
-  public role: string="";
+	public role: string="";
 	selectedStatus:any=[];
 	contentStatus: any=[];
 	selectedStatusArry: any=[];
@@ -34,42 +34,46 @@ export class MyCoursesComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-			this.getAssignCourse();
+		this.getAssignCourse();
 	}
 
-		onDrawerButtonTap(): void {
+	onDrawerButtonTap(): void {
 		const sideDrawer = <RadSideDrawer>app.getRootView();
 		sideDrawer.showDrawer();
 	}
 
-// go to playlist component 
-gotoPlaylist(playlistData: any, title:any){
-		let params = {
-			videoData: JSON.stringify(playlistData),
-			title: JSON.stringify(title)
-		}
-		this.routerExtensions.navigate(['/playlist'], {
-			queryParams: params,
-		});
-}
+	// go to playlist component 
+	gotoPlaylist(playlistData: any, title:any){
+				let params = {
+						videoData: JSON.stringify(playlistData),
+						title: JSON.stringify(title)
+					}
+					this.routerExtensions.navigate(['/playlist'], {
+							queryParams: params,
+						});
+				}
+
+				// gotoPlaylist(playlistData: any, title:any){
+    //     localStorage.setItem('playlistData', JSON.stringify({ data: playlistData}));
+    //     localStorage.setItem('title', JSON.stringify({ data: title}));
+				// }
 
 
+				//To get all assign course -
+				getAssignCourse(){
+					this.isLoading=true;
+					this.courseService.getAssignCourse().subscribe(response=>{
+						this.isLoading=false;
+						if(response['data']){
+							this.courses=response['data'];
+							this.dataArr=response['data'];
+							this.totalItems=response['data'].length;
+						}
+					},error=>{
+						this.errorMessage=error.msg;
+						this.messageService.onError(this.errorMessage);
+					}
+					)
+				}
 
-	  	//To get all assign course -
-	getAssignCourse(){
-		this.isLoading=true;
-		this.courseService.getAssignCourse().subscribe(response=>{
-			this.isLoading=false;
-			if(response['data']){
-				this.courses=response['data'];
-				this.dataArr=response['data'];;
-				this.totalItems=response['data'].length;
 			}
-		},error=>{
-			this.errorMessage=error.msg;
-			this.messageService.onError(this.errorMessage);
-		}
-		)
-	}
-
-}

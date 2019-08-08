@@ -4,13 +4,13 @@ Learn more about the RadSideDrawer UI component and how it can be customized in 
 http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
 -->
 <!--   <page-router-outlet></page-router-outlet> -->
-<RadSideDrawer [drawerTransition]="sideDrawerTransition" gesturesEnabled="false">
+<RadSideDrawer [drawerTransition]="sideDrawerTransition">
 	<GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
 		<StackLayout row="0" class="sidedrawer-header">
 			<Image  class="sidedrawer-header-image" width=80 height=80 borderRadius="50" stretch="aspectFill" src="res://courseimg"></Image>
 			<!-- <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label> -->
 			<Label class="sidedrawer-header-brand" [text]="name"></Label>
-	<!-- 		<Label class="footnote" text="username@mail.com"></Label> -->
+			<!-- 		<Label class="footnote" text="username@mail.com"></Label> -->
 		</StackLayout>
 
 		<ScrollView row="1">
@@ -20,10 +20,6 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 					<Label col="1" text="Dashboard" class="p-r-10"></Label>
 				</GridLayout>
 
-				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/browse')" (tap)="onNavItemTap('/browse')">
-					<Label col="0" text="&#xf1ea;" class="fa"></Label>
-					<Label col="1" text="Post" class="p-r-10"></Label>
-				</GridLayout>
 
 				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/liveClasses')" (tap)="onNavItemTap('/liveClasses')">
 					<Label col="0" text="&#xf025;" class="fa"></Label>
@@ -51,6 +47,12 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 					<Label col="0" text="&#xf08b;" class="fa"></Label>
 					<Label col="1" text="Logout" class="p-r-10"></Label>
 				</GridLayout>
+
+<!-- 				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/post')" (tap)="onNavItemTap('/post')">
+					<Label col="0" text="&#xf1ea;" class="fa"></Label>
+					<Label col="1" text="Post" class="p-r-10"></Label>
+				</GridLayout> -->
+
 			</StackLayout>
 		</ScrollView>
 	</GridLayout>

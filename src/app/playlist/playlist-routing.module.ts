@@ -4,12 +4,15 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 
 import { PlaylistComponent } from "./playlist.component";
 
+
 const routes: Routes = [
-    { path: "", component: PlaylistComponent }
+{ path: "", component: PlaylistComponent }
+
+
 ];
 
 @NgModule({
-    imports: [NativeScriptRouterModule.forChild(routes)],
-    exports: [NativeScriptRouterModule]
+	imports: [NativeScriptRouterModule.forChild(routes)],
+	exports: [NativeScriptRouterModule]
 })
 export class PlaylistRoutingModule { }

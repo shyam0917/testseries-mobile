@@ -1,20 +1,20 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
-import { VideoPlayerRoutingModule } from "./video-player-routing.module";
-import { VideoPlayerComponent } from "./video-player.component";
+
+import { PostRoutingModule } from "./post-routing.module";
+import { PostComponent } from "./post.component";
 
 
 @NgModule({
 	imports: [
 	NativeScriptCommonModule,
-	VideoPlayerRoutingModule,
-
+	PostRoutingModule,
 	],
 	declarations: [
-	VideoPlayerComponent
+	PostComponent,
 	],
 	schemas: [
 	NO_ERRORS_SCHEMA
 	]
 })
-export class VideoPlayerModule { }
+export class PostModule { }

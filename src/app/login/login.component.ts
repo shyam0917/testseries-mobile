@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RouterExtensions } from "nativescript-angular/router";
 import { Page } from "tns-core-modules/ui/page";
 import { Router,ActivatedRoute } from '@angular/router';
@@ -22,7 +22,7 @@ import { Label } from "tns-core-modules/ui/label";
 	providers:[MessageService,AuthenticationService],
 	moduleId: module.id,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,AfterViewInit {
 	private drawer: RadSideDrawer;
 	public loginInfo = {
 		email: "",
@@ -49,6 +49,15 @@ export class LoginComponent implements OnInit {
 	ngOnInit() {
 		this.page.actionBarHidden = true;
 	}
+
+    ngAfterViewInit() {
+        // use setTimeout otherwise there is no getRootView valid reference
+        setTimeout(() => {
+            this.drawer = <RadSideDrawer>getRootView();
+            this.drawer.gesturesEnabled = false;
+        }, 100);
+    }
+
 
 	onFocus(args: any,labelObj) {
 		// console.log(args)

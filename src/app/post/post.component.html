@@ -1,0 +1,11 @@
+
+
+
+<StackLayout style="padding-left:5; padding-right:5; background-color: black;" isUserInteractionEnabled="false">
+	<VideoPlayer
+	[src]="vr" (playbackReady)="callonReady()"
+	autoplay="true"
+	setVolume="1" width="100%"></VideoPlayer>
+</StackLayout>
+
+<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>
