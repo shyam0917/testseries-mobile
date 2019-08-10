@@ -1,23 +1,151 @@
+
 <ActionBar class="action-bar">
-	<NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-	<ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-		ios.position="left">
-	</ActionItem>
-	<Label class="action-bar-title" text="Profile"></Label>
+	<GridLayout columns="4*,*">
+		<StackLayout col="0" class="m-y-auto">
+			<Label text="Profile Section" class="action-bar-custom"></Label>
+		</StackLayout>
+	</GridLayout>
+	<NavigationButton icon="res://ic_arrow_back_white_24dp" (tap)="goBack()"></NavigationButton>
 </ActionBar>
 
+
 <TabView id="tabViewContainer">
-    <StackLayout *tabItem="{title: 'Profile'}">
-        <StackLayout>
-            <Label text="Profile" textWrap="true" class="m-15 h2 text-left" color="blue"></Label>
-        </StackLayout>
-    </StackLayout>
-    <StackLayout *tabItem="{title: 'Address'}">
-        <StackLayout>
-            <Label text="Change Password" textWrap="true" class="m-15 h2 text-left" color="blue"></Label>
-        </StackLayout>
-    </StackLayout>
-        <StackLayout *tabItem="{title: 'Change Password'}">
+	<StackLayout *tabItem="{title: 'Profile'}">
+		<ScrollView>
+			<GridLayout *ngIf="!showPassword" rows="auto,auto,auto,auto,auto,*">
+				<StackLayout row="0" class="m-t-5 p-t-5 m-b-10">
+					<Image width=100 height=100 borderRadius="50" stretch="aspectFill" src="res://courseimg"></Image>
+					<Button text="Add Photo" fontSize="12" class="btn btn-primarylight btn-active btn-rounded-lg m-x-auto" (tap)="onSubmit(passwordInfo)"></Button> 
+				</StackLayout>
+
+				<GridLayout row="1">
+					<GridLayot row="0" columns="auto,*" class="m-x-30">
+						<StackLayout col="0" class="p-20">
+							<Label text="&#xf007;  " class="fa" fontSize="16"></Label>
+						</StackLayout>
+						<TextField col="1" hint="Enter Your Name" class="m-x-30 p-l-20"></TextField> 
+					</GridLayot>
+				</GridLayout>
+
+				<GridLayout row="2">
+					<GridLayot row="0" columns="auto,*" class="m-x-30">
+						<StackLayout col="0" class="p-20">
+							<Label text="&#xf0e0; " class="fa" fontSize="14"></Label>
+						</StackLayout>
+						<TextField col="1" hint="Enter Your E-mail" class="m-x-30 p-l-20"></TextField> 
+					</GridLayot>
+				</GridLayout>
+
+				<GridLayout row="3">
+					<GridLayot row="0" columns="auto,*" class="m-x-30">
+						<StackLayout col="0" class="p-20">
+							<Label text="&#xf10b; " class="fa" fontSize="23"></Label>
+						</StackLayout>
+						<TextField col="1" hint="Enter Mobile Number" class="m-x-30 p-l-20"></TextField> 
+					</GridLayot>
+				</GridLayout>
+
+				<GridLayout row="4">
+					<Button text="Update" class="btn btn-primary btn-active btn-rounded-lg m-t-4 m-x-15" (tap)="onSubmit(profileInfo)"></Button> 
+				</GridLayout>
+
+				<StackLayout row="5" class="m-y-5" (tap)="changePassword()">
+					<Label text="&#xf023; Change Password" fontSize="16" class="fa text-primary text-center p-20"></Label>
+				</StackLayout>			
+			</GridLayout>
+
+			<StackLayout *ngIf="showPassword" class=" m-x-15 m-y-auto">
+				<GridLayout rows="30, auto,auto" marginBottom="5">
+					<TextField row="1" hint="&#xf023; Enter Old Password" secure="true" class="fa" #oldPassword="ngModel" [(ngModel)]="passwordInfo.oldPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="oldPassword" minlength="8" returnKeyType="next" required></TextField>
+					<StackLayout row="2" *ngIf="oldPassword.invalid && oldPassword.touched" class="text-danger">
+						<Label *ngIf="oldPassword.errors?.required && oldPassword.touched" text="Name is required"></Label>
+					</StackLayout>
+				</GridLayout>
+
+				<GridLayout rows="30, auto,auto" marginBottom="5">
+					<TextField  row="1" hint="&#xf023; Enter New Password" secure="true" class="fa" #newPassword="ngModel" [(ngModel)]="passwordInfo.newPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2"   name="newPassword" returnKeyType="next" required [pattern]="emailpattern"></TextField>
+					<StackLayout row="2" *ngIf="newPassword.invalid && newPassword.touched" class="text-danger">
+						<Label *ngIf="newPassword.errors?.required && newPassword.touched" text="EmailId is required"></Label>
+						<Label *ngIf="newPassword.errors?.pattern && newPassword.touched" text="Enter valid EmailId"></Label>
+					</StackLayout>
+				</GridLayout>
+
+				<GridLayout rows="30, auto,auto" marginBottom="5">	
+					<TextField  row="1" #confirmPassword="ngModel" hint="&#xf023; Enter Confirm Password"  class="fa" [(ngModel)]="passwordInfo.confirmPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="confirmPassword" returnKeyType="next" required [pattern]="mobilepattern"></TextField> 
+					<StackLayout row="2" *ngIf="confirmPassword.invalid && confirmPassword.touched" class="text-danger">
+						<Label *ngIf="confirmPassword.errors?.pattern && confirmPassword.touched" text="Enter valid Mobile No"></Label>
+					</StackLayout>
+				</GridLayout>
+
+
+				<StackLayout class="p-t-10">
+					<Button text="UPDATE" class="btn btn-primary btn-active btn-rounded-lg" [isEnabled]="oldPassword.valid && newPassword.valid && confirmPassword.valid" (tap)="onPasswordSubmit(passwordInfo)"></Button> 
+				</StackLayout>
+				<StackLayout class="m-y-5" (tap)="changePassword()">
+					<Label text="&#xf007; Profile" fontSize="16" class="fa text-primary text-center p-20"></Label>
+				</StackLayout>
+			</StackLayout>
+		</ScrollView>
+	</StackLayout>
+
+	<!-- tab layout for address start here -->
+	<StackLayout *tabItem="{title: 'Address'}">
+		<StackLayout>
+			<ScrollView>
+			<GridLayout rows="auto,auto,auto,auto,auto,auto,auto,*" class="m-t-5">
+				<GridLayout row="1">
+					<GridLayot row="0" columns="auto,*" class="m-x-30">
+						<StackLayout col="0" class="p-20">
+							<Label text="&#xf007;  " class="fa" fontSize="16"></Label>
+						</StackLayout>
+						<TextField col="1" hint="India" class="m-x-30 p-l-20"></TextField> 
+					</GridLayot>
+				</GridLayout>
+
+				<GridLayout row="2">
+					<GridLayot row="0" columns="auto,*" class="m-x-30">
+						<StackLayout col="0" class="p-20">
+							<Label text="&#xf0e0; " class="fa" fontSize="14"></Label>
+						</StackLayout>
+						<TextField col="1" hint="Enter Your State" class="m-x-30 p-l-20"></TextField> 
+					</GridLayot>
+				</GridLayout>
+
+				<GridLayout row="3">
+					<GridLayot row="0" columns="auto,*" class="m-x-30">
+						<StackLayout col="0" class="p-20">
+							<Label text="&#xf015; " class="fa" fontSize="17"></Label>
+						</StackLayout>
+						<TextField col="1" hint="Enter Your City" class="m-x-30 p-l-20"></TextField> 
+					</GridLayot>
+				</GridLayout>
+
+				<GridLayout row="4">
+					<GridLayot row="0" columns="auto,*" class="m-x-30">
+						<StackLayout col="0" class="p-20">
+							<Label text="&#xf276; " class="fa" fontSize="17"></Label>
+						</StackLayout>
+						<TextField col="1" hint="Enter Pin Code" class="m-x-30 p-l-20"></TextField> 
+					</GridLayot>
+				</GridLayout>
+
+				<GridLayout row="5">
+					<GridLayot row="0" columns="auto,*" class="m-x-30">
+						<StackLayout col="0" class="p-20">
+							<Label text="&#xf041; " class="fa" fontSize="17"></Label>
+						</StackLayout>
+						<TextField col="1" hint="Enter Your Address" class="m-x-30 p-l-20"></TextField> 
+					</GridLayot>
+				</GridLayout>
+
+				<GridLayout row="6">
+					<Button text="Update" class="btn btn-primary btn-active btn-rounded-lg m-t-4 m-x-15" (tap)="onSubmit(profileInfo)"></Button> 
+				</GridLayout>			
+			</GridLayout>
+		</ScrollView>
+		</StackLayout>
+	</StackLayout>
+        <!-- <StackLayout *tabItem="{title: 'Change Password'}">
        <StackLayout class=" m-x-15 m-y-auto">
 	<GridLayout rows="30, auto,auto" marginBottom="5">
 		<Label row="1" text="&#xf007; Enter Old Password" fontSize="14"  class="fa"></Label>
@@ -37,7 +165,7 @@
 	</GridLayout>
 
 	<GridLayout rows="30, auto,auto" marginBottom="5">
-		<!-- <Label row="1" text="&#xf10b; Enter Confirm Password" fontSize="14"  class="fa"></Label> -->
+		
 		<TextField  row="1" #confirmPassword="ngModel" placeholder="hii" [(ngModel)]="passwordInfo.confirmPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="confirmPassword" returnKeyType="next" required [pattern]="mobilepattern"></TextField> 
 		<StackLayout row="2" *ngIf="confirmPassword.invalid && confirmPassword.touched" class="text-danger">
 			<Label *ngIf="confirmPassword.errors?.pattern && confirmPassword.touched" text="Enter valid Mobile No"></Label>
@@ -49,5 +177,5 @@
 		<Button text="UPDATE" class="btn btn-primary btn-active btn-rounded-lg" height="45" width="100%" [isEnabled]="oldPassword.valid && newPassword.valid && confirmPassword.valid" (tap)="onSubmit(passwordInfo)"></Button> 
 	</StackLayout>
 </StackLayout>
-    </StackLayout>
+</StackLayout> -->
 </TabView>

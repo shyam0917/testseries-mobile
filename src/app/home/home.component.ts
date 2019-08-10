@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
 // 	 @ViewChild('webView') webView: ElementRef;
 // 	 public player:any;
 // public oWebViewInterface:any;
-// private drawer: RadSideDrawer;
+private drawer: RadSideDrawer;
 	
 	constructor() {
 		// Use the component constructor to inject providers.
@@ -28,10 +28,10 @@ export class HomeComponent implements OnInit,AfterViewInit {
 
     ngAfterViewInit() {
         // use setTimeout otherwise there is no getRootView valid reference
-        // setTimeout(() => {
-        //     this.drawer = <RadSideDrawer>getRootView();
-        //     this.drawer.gesturesEnabled = true;
-        // }, 100);
+        setTimeout(() => {
+            this.drawer = <RadSideDrawer>getRootView();
+            this.drawer.gesturesEnabled = true;
+        }, 100);
     }
 
 	onDrawerButtonTap(): void {

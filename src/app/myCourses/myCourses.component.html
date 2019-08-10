@@ -1,10 +1,13 @@
 <ActionBar class="action-bar">
-
-	<NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+	<GridLayout columns="4*,*">
+		<StackLayout col="0" class="m-y-auto">
+			<Label text="My Courses" class="action-bar-custom"></Label>
+		</StackLayout>
+	</GridLayout>
 	<ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-		ios.position="left">
-	</ActionItem>
-	<Label class="action-bar-title text-left" text="My Couses"></Label>
+	ios.position="left">
+</ActionItem>
+<NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
 </ActionBar>
 
 <ListView class="list-group" [items]="courses" (itemTap)="onItemTapFirstList($event)" separatorColor="transparent">

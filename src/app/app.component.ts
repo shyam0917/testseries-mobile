@@ -7,6 +7,7 @@ import { StudentService } from "./services/student.service";
 import { MessageService } from "./services/message.service";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 import { filter } from "rxjs/operators";
+import * as SocialShare from "nativescript-social-share";
 import * as app from "tns-core-modules/application";
 
 @Component({
@@ -94,19 +95,24 @@ export class AppComponent implements OnInit,OnDestroy {
 	// Get user detail on basis of userId
 	getUserDetail(){
 		this.studentService.getStudentInfo('student_info_q2').subscribe(response=>{
-		
+
 			if(response['data']){
-					this.name=response['data'].name;
-					console.log(this.name);
-				}
-			}, (error:any)=> {
-				this.messageService.onError(error);
-			});
+				this.name=response['data'].name;
+				console.log(this.name);
+			}
+		}, (error:any)=> {
+			this.messageService.onError(error);
+		});
 	}
 	
 
 	openProfile(){
 		this.routerExtensions.navigate(['/profile']);
+	}
+
+	// on shre click
+	onShareTap(){
+SocialShare.shareUrl("https://www.testseries.org/", "Awesome app for exam preparations");
 	}
 
 	onLogout(){
@@ -116,10 +122,10 @@ export class AppComponent implements OnInit,OnDestroy {
 	}
 
 
-			ngOnDestroy() {
-				// >> connectivity-stop-code 
-				Connectivity.stopMonitoring();
-				// << connectivity-stop-code
-		}
+	ngOnDestroy() {
+		// >> connectivity-stop-code 
+		Connectivity.stopMonitoring();
+		// << connectivity-stop-code
+	}
 
 }

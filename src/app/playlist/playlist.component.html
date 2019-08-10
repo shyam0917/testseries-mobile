@@ -3,10 +3,13 @@
 <ActionBar class="action-bar">
 	<GridLayout columns="4*,*">
 		<StackLayout col="0" class="m-y-auto">
-			<Label [text]="title" fontSize="18"></Label>
+			<Label [text]="title" class="action-bar-custom"></Label>
 		</StackLayout>
 	</GridLayout>
-	<NavigationButton icon="res://ic_arrow_back_white_24dp" (tap)="goBack()"></NavigationButton>
+	<ActionItem icon="" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+	ios.position="left">
+</ActionItem>
+<NavigationButton ios:visibility="collapsed" icon="res://ic_arrow_back_white_24dp" (tap)="goBack()"></NavigationButton>
 </ActionBar>
 
 <ScrollView>
