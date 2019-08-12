@@ -3,6 +3,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { MessageConfig } from './../config/message-config.constants';
 import { CommonConfig } from './../config/common-config.constants';
 import { AuthenticationService } from './../services/authentication.service';
+import { RouterExtensions } from "nativescript-angular/router";
 import { MessageService } from './../services/message.service';
 import { CourseService } from './../services/course.service';
 import * as app from "tns-core-modules/application";
@@ -32,6 +33,7 @@ export class LiveClassesComponent implements OnInit {
 
 	constructor( private authenticationService: AuthenticationService,
 		private courseService: CourseService,
+		private routerExtensions: RouterExtensions,
 		private messageService: MessageService) {
 		// Use the component constructor to inject providers.
 	}
@@ -79,6 +81,15 @@ export class LiveClassesComponent implements OnInit {
 	//To getting course details by id 
 	getCourseDetails(id:string){
 		this.courseDetails=this.courses.find(ele=>ele._id === id);
+	}
+
+	showPreview(Id){
+		let params = {
+			 courseId: JSON.stringify(Id)
+		}
+		this.routerExtensions.navigate(['/preview'], {
+			queryParams: params,
+		});
 	}
 
 	onDrawerButtonTap(): void {

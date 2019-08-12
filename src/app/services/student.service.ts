@@ -39,4 +39,15 @@ export class StudentService {
 				}));
 	}
 
+// to get courses by id
+	getCoursesDataById(id:String){
+		return this.http.get(AppConfig.API_HOST+'/api/courses/byCourseId/'+id,this.authorizationService.authorization()).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
+
+
 }

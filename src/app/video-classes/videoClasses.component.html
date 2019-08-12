@@ -23,7 +23,7 @@
 			</StackLayout>
 				<GridLayout row="2" columns="*,*" class="m-t-5">
 					<Button col="0" text="&#xf02d; Take Course" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg fa"></Button>
-						<Button col="1" text="&#xf06e; Preview" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg fa"></Button>
+						<Button col="1" text="&#xf06e; Preview" (tap)="showPreview(course?._id)" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg fa"></Button>
 						</GridLayout>     
 					</GridLayout>
 				</GridLayout>
