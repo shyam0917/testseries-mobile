@@ -9,7 +9,7 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 		<StackLayout row="0" class="sidedrawer-header">
 			<Image  class="sidedrawer-header-image" width=80 height=80 borderRadius="50" stretch="aspectFill" src="res://courseimg"></Image>
 			<!-- <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label> -->
-			<Label class="sidedrawer-header-brand" [text]="name"></Label>
+			<Label class="sidedrawer-header-brand fa" text="&#xf007; {{name}}"></Label>
 			<!-- 		<Label class="footnote" text="username@mail.com"></Label> -->
 		</StackLayout>
 
@@ -20,6 +20,10 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 					<Label col="1" text="Dashboard" class="p-r-10"></Label>
 				</GridLayout>
 
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/userpost')" (tap)="onNavItemTap('/userpost')">
+					<Label col="0" text="&#xf015;" class="fa"></Label>
+					<Label col="1" text="Posts" class="p-r-10"></Label>
+				</GridLayout>
 
 				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/liveClasses')" (tap)="onNavItemTap('/liveClasses')">
 					<Label col="0" text="&#xf025;" class="fa"></Label>
@@ -46,6 +50,11 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 				<GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="onShareTap()">
 					<Label col="0" text="&#xf1e0;" class="fa"></Label>
 					<Label col="1" text="Share" class="p-r-10"></Label>
+				</GridLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="onCallTap()">
+					<Label col="0" text="&#xf095;" class="fa"></Label>
+					<Label col="1" text="Call Us/ Helpline" class="p-r-10"></Label>
 				</GridLayout>
 
 				<GridLayout columns="auto, *" class="sidedrawer-list-item" (tap)="onLogout()">

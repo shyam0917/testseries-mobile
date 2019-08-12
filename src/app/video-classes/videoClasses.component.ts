@@ -68,9 +68,12 @@ export class VideoClassesComponent implements OnInit {
 			this.isLoading=false;
 			if(response['data']){
 				this.courses=response['data'];
-				this.dataArr=response['data'];
-				this.totalItems=response['data'].length;
-
+				this.courses=this.courses.filter((item)=>{
+					if(item.platform==="VideoCourses" && item.view==="released" && item.status=="Active"){
+						return item;
+					}
+				})
+				console.log(JSON.stringify(this.courses));
 			}
 		},error=>{
 			this.errorMessage=error.json().msg;

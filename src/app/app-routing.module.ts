@@ -11,6 +11,7 @@ const routes: Routes = [
 	{ path: "profile", loadChildren: "~/app/profile/profile.module#ProfileModule" },
 	{ path: "home", loadChildren: "~/app/home/home.module#HomeModule" },
 	{ path: "post", loadChildren: "~/app/post/post.module#PostModule" },
+	{ path: "userpost", loadChildren: "~/app/user-posts/userpost.module#UserPostModule" },
 	{ path: "sidebar", loadChildren: "~/app/sidebar/sidebar.module#SidebarModule" },
 	{ path: "videoClasses", loadChildren: "~/app/video-classes/videoClasses.module#VideoClassesModule" },
 	{ path: "myCourses", loadChildren: "~/app/myCourses/myCourses.module#MyCoursesModule" },

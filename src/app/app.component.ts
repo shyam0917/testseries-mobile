@@ -8,6 +8,7 @@ import { MessageService } from "./services/message.service";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 import { filter } from "rxjs/operators";
 import * as SocialShare from "nativescript-social-share";
+import * as TNSPhone from 'nativescript-phone';
 import * as app from "tns-core-modules/application";
 
 @Component({
@@ -119,6 +120,13 @@ SocialShare.shareUrl("https://www.testseries.org/", "Awesome app for exam prepar
 		this.authenticationService.logout();
 		const sideDrawer = <RadSideDrawer>app.getRootView();
 		sideDrawer.closeDrawer();
+	}
+
+	onCallTap(){
+		   const phoneNumber = '8826612940';
+   TNSPhone.requestCallPermission('You should accept the permission to be able to make a direct phone call.')
+      .then(() => TNSPhone.dial(phoneNumber, false))
+      .catch(() => TNSPhone.dial(phoneNumber, true));
 	}
 
 

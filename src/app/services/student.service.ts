@@ -28,4 +28,15 @@ export class StudentService {
 			}));
 	}
 
+
+		// get all posts by fielter
+	getAllPosts(queryFilter: any={}){
+		return this.http.get(AppConfig.API_HOST+'/api/posts',this.authorizationService.authorization(queryFilter)).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
+
 }

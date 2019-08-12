@@ -56,16 +56,20 @@ export class LiveClassesComponent implements OnInit {
 
 //To get all Active course -
 	getAllCourses(filter: any={}){
-		this.messageService.showLoader.emit(true);
+		this.isLoading=true;
 		this.courseService.getAllCourses(filter).subscribe(response=>{
-			this.messageService.showLoader.emit(false);
+			this.isLoading=false;
 			if(response['data']){
 				this.courses=response['data'];
+				this.courses=this.courses.filter((item)=>{
+					if(item.platform==="LiveClasses" && item.view==="released"){
+						return item;
+					}
+				})
 				console.log(JSON.stringify(this.courses));
-				this.dataArr=response['data'];
-				this.totalItems=response['data'].length;
 			}
 		},error=>{
+			this.isLoading=false;
 			this.errorMessage=error.msg;
 			this.messageService.onError(this.errorMessage);
 		}
