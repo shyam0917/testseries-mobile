@@ -28,8 +28,7 @@ export class PlaylistComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// console.log(localStorage.getItem('playlistData'));
-		// console.log(localStorage.getItem('title'));
+	console.log(JSON.stringify(this.courseData));
 
 	}
 

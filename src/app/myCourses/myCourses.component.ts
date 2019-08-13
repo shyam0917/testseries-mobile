@@ -2,7 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { RouterExtensions } from "nativescript-angular/router";
 import { MessageService } from './../services/message.service';
+import { DeviceOrientation } from "ui/enums";
 import { CourseService } from './../services/course.service';
+import {OrientationChangedEventData} from "tns-core-modules/application"
 import * as app from "tns-core-modules/application";
 
 @Component({
@@ -20,6 +22,7 @@ export class MyCoursesComponent implements OnInit {
 	public totalItems: number = 0;
 	errorMessage: string;
 	successMessage: string;
+	rowHeight:number=190;
 	isLoading:boolean=false;
 	courseDetails:any={};
 	addCourseObject:any={};
@@ -35,6 +38,7 @@ export class MyCoursesComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getAssignCourse();
+		 // app.on(app.orientationChangedEvent, this.onOrientationChanged);
 	}
 
 	onDrawerButtonTap(): void {
@@ -53,10 +57,12 @@ export class MyCoursesComponent implements OnInit {
 						});
 				}
 
-				// gotoPlaylist(playlistData: any, title:any){
-    //     localStorage.setItem('playlistData', JSON.stringify({ data: playlistData}));
-    //     localStorage.setItem('title', JSON.stringify({ data: title}));
-				// }
+    //  onOrientationChanged = (args: app.OrientationChangedEventData) => {
+    //     if(args.newValue==DeviceOrientation.landscape){
+    //      this.rowHeight=400;
+    //      console.log(this.rowHeight);
+    //     }
+    // };
 
 
 				//To get all assign course -
@@ -65,7 +71,7 @@ export class MyCoursesComponent implements OnInit {
 					this.courseService.getAssignCourse().subscribe(response=>{
 						this.isLoading=false;
 						if(response['data']){
-							this.courses=response['data'];
+							 this.courses=response['data'];
 							this.dataArr=response['data'];
 							this.totalItems=response['data'].length;
 						}

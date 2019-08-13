@@ -50,4 +50,43 @@ export class StudentService {
 	}
 
 
+		/* get user profile details */
+	getDetails(){
+		return this.http.get(AppConfig.API_HOST + "/api/profiles",this.authorizationService.authorization()).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
+
+		// update profile address -`
+	profileAddress(addressData){
+		return this.http.put(AppConfig.API_HOST + "/api/profiles/address",addressData,this.authorizationService.authorization()).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
+
+	 // Change Password
+	changePassword(passwordData){
+		return this.http.put(AppConfig.API_HOST + "/api/users/profile/change-password",passwordData,this.authorizationService.authorization()).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
+
+ // update basic info of user
+ updateBasicInfo(basicInfo){
+		return this.http.put(AppConfig.API_HOST+"/api/profiles",basicInfo,this.authorizationService.authorization()).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
 }

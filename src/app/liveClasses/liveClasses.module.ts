@@ -3,11 +3,13 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 
 import { LiveClassesRoutingModule } from "./liveClasses-routing.module";
 import { LiveClassesComponent } from "./liveClasses.component";
+import { GridViewModule } from 'nativescript-grid-view/angular';
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        LiveClassesRoutingModule
+        LiveClassesRoutingModule,
+        GridViewModule
     ],
     declarations: [
         LiveClassesComponent

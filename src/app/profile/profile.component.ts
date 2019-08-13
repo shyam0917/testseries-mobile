@@ -4,6 +4,8 @@ import * as app from "tns-core-modules/application";
 import { TabView } from "tns-core-modules/ui/tab-view";
 import { ValidationConfig } from "../config/validation-config.constants";
 import { TextField } from 'ui/text-field'; 
+import { StudentService } from '../services/student.service';
+import { MessageService } from '../services/message.service';
 import { RouterExtensions } from "nativescript-angular/router";
 import frameModule = require("ui/frame");
 
@@ -16,7 +18,7 @@ export class ProfileComponent implements OnInit {
 	public passwordInfo={
 		oldPassword:'',
 		newPassword:'',
-		confirmPassword:''
+		confirmNewPassword:''
 	}
 	public personalInfo={
 		name:'',
@@ -25,22 +27,30 @@ export class ProfileComponent implements OnInit {
 	}
 	public addressInfo={
 		state:'',
+		country:'',
 		city:'',
-		pinCode:'',
+		pincode:'',
 		address:''
 	}
+	successMessage:string;
+	errorMessage:string;
+	isLoading:boolean=false;
+	public userData: any = {} ;
 	public showPassword:boolean=false;
 	public newPass:string="";
 	public confirmPass:string="";
 	public matchpass:boolean=false;
 	public passwordpattern=ValidationConfig.PASSWORD_PATTERN;
 
-	constructor(private routerExtensions: RouterExtensions) {
+
+	constructor(private routerExtensions: RouterExtensions,
+		private studentService: StudentService,
+		private messageService: MessageService) {
 		// Use the component constructor to inject providers.
 	}
 
 	ngOnInit(): void {
-
+		this.getUserDetail();
 	}
 
 
@@ -54,7 +64,20 @@ export class ProfileComponent implements OnInit {
 	}
 
 	onSubmitAddress(addressInfo:any){
-  console.log(JSON.stringify(addressInfo));
+		this.errorMessage="";
+		addressInfo.country="India";
+		console.log(JSON.stringify(addressInfo));
+		this.isLoading=true;
+		this.studentService.profileAddress(addressInfo).subscribe(response=>{
+			if(response['success']) {
+				this.isLoading=false;
+				this.messageService.successMessage('Address', 'Successfully Changed');
+			}
+		}, error=>{
+			this.isLoading=false;
+			this.errorMessage=error.error.msg;
+			this.messageService.onErrorMessage(this.errorMessage);
+		});
 	}
 
 	//input event on new password field
@@ -64,9 +87,9 @@ export class ProfileComponent implements OnInit {
 		console.log(this.newPass);
 	}
 
-	onConfirmPassword(args){
-		let confirmPassword = <TextField>args.object;
-		this.confirmPass=confirmPassword.text.trim();
+	onconfirmNewPassword(args){
+		let confirmNewPassword = <TextField>args.object;
+		this.confirmPass=confirmNewPassword.text.trim();
 		console.log(this.confirmPass);
 		if(this.confirmPass!=this.newPass){
 			this.matchpass=true;
@@ -79,11 +102,40 @@ export class ProfileComponent implements OnInit {
 	}
 
 	onPasswordSubmit(passwordInfo:any){
-		console.log(JSON.stringify(passwordInfo));
+		this.isLoading=true;
+		this.studentService.changePassword(passwordInfo).subscribe(response=>{
+          console.log(JSON.stringify(response['data']));
+			if(response['data']){
+				this.isLoading=false;
+				this.passwordInfo=null;
+				this.messageService.successMessage('Password', 'Successfully Updated');
+			}
+		},error=>{
+			this.isLoading=false;
+			this.errorMessage=error.error.msg;
+			console.log(JSON.stringify(error));
+			this.messageService.onErrorMessage(this.errorMessage);
+		}
+		)
 	}
+	
 
 	goBack(){
 		this.routerExtensions.navigate(['/home'],{ clearHistory: true });
+	}
+
+	// Get user detail on basis of userId
+	getUserDetail(){
+		this.studentService.getDetails().subscribe((response)=>{
+			if(response['data']){
+				this.userData=response['data'];
+				this.personalInfo=this.userData;
+        this.addressInfo=this.userData.addressInfo;
+			}
+		}, (error)=>{
+			this.errorMessage=error.msg; 
+			this.messageService.onError(this.errorMessage);
+		})		
 	}
 
 	onDrawerButtonTap(): void {

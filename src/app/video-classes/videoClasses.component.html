@@ -10,7 +10,32 @@
 <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
 </ActionBar>
 
-<ListView class="list-group" [items]="courses" (itemTap)="onItemTapFirstList($event)" separatorColor="transparent">
+
+<GridView [items]="courses" colWidth="50%" rowHeight="220">
+	<ng-template let-course="item" let-odd="odd">
+		<StackLayout margin="10" borderColor="black" borderWidth="1" borderRadius="3" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
+	<GridLayout rows="* auto" columns="*" class="list-group-item active" style="border:1;">
+			<Image row="0" stretch="aspectFill" col="0" src="res://courseimg"></Image>
+			<GridLayout row="1" rows="auto,auto,auto" col="0" backgroundColor="white" class="list-group-item">
+				<StackLayout row="0" class="m-t-5">
+				<Label class="list-group-item-heading m-t-3 p-l-5 set-dark" fontSize="15" text="{{course?.courseName| slice:0:30}}"></Label>
+			</StackLayout>
+			<StackLayout row="1" class="m-t-5">
+				<Label class="list-group-item-text font-weight-bold fa p-l-5" fontSize="14" text="Price:- {{course?.amount}} &#xf156;"></Label> 
+			</StackLayout>
+				<GridLayout row="2" columns="*,*" class="m-t-5">
+					<Button col="0" text="&#xf02d; Take Course" width="45%" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg fa p-l-5"></Button>
+						<Button col="1" text="&#xf06e; Preview" width="45%" (tap)="showPreview(course?._id)" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg fa"></Button>
+						</GridLayout>     
+					</GridLayout>
+				</GridLayout>
+		</StackLayout>
+	</ng-template>
+</GridView>
+
+
+
+<!-- <ListView class="list-group" [items]="courses" (itemTap)="onItemTapFirstList($event)" separatorColor="transparent">
 	<ng-template let-course="item">
 		<GridLayout rows="* auto" columns="*" class="list-group-item active" style="border:1;">
 			<Image row="0" col="0" src="res://courseimg"></Image>
@@ -28,7 +53,7 @@
 					</GridLayout>
 				</GridLayout>
 			</ng-template>
-		</ListView>
+		</ListView> -->
 
 
 	<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>

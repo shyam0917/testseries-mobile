@@ -56,35 +56,31 @@
 
 			<StackLayout *ngIf="showPassword" class=" m-x-15 m-y-auto">
 				<GridLayout rows="30, auto,auto" marginBottom="5">
-					<TextField row="1" hint="&#xf023; Enter Old Password" secure="true" class="fa" #oldPassword="ngModel" [(ngModel)]="passwordInfo.oldPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="oldPassword" minlength="8" returnKeyType="next" required [pattern]="passwordpattern"></TextField>
+					<TextField row="1" hint="&#xf023; Enter Old Password" secure="true" class="fa" #oldPassword="ngModel" [(ngModel)]="passwordInfo.oldPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="oldPassword" minlength="8" returnKeyType="next" required></TextField>
 					<StackLayout row="2" *ngIf="oldPassword.invalid && oldPassword.touched" class="text-danger">
 						<Label *ngIf="oldPassword.errors?.required && oldPassword.touched" text="Old Password is required"></Label>
-						<Label *ngIf="oldPassword.errors?.pattern && oldPassword.touched" text="Enter valid old password"></Label>
+						<Label *ngIf="oldPassword.errors?.minlength && oldPassword.touched" text="Your password must include at least 8 characters"></Label>
 					</StackLayout>
 				</GridLayout>
 
 				<GridLayout rows="30, auto,auto" marginBottom="5">
-					<TextField  row="1" hint="&#xf023; Enter New Password" secure="true" class="fa" #newPassword="ngModel" [(ngModel)]="passwordInfo.newPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="newPassword" (textChange)="onNewPassword($event)" returnKeyType="next" required [pattern]="passwordpattern"></TextField>
+					<TextField  row="1" hint="&#xf023; Enter New Password" secure="true" class="fa" #newPassword="ngModel" [(ngModel)]="passwordInfo.newPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" name="newPassword" (textChange)="onNewPassword($event)" returnKeyType="next" required minlength="8"></TextField>
 					<StackLayout row="2" *ngIf="newPassword.invalid && newPassword.touched" class="text-danger">
 						<Label *ngIf="newPassword.errors?.required && newPassword.touched" text="New Password is required"></Label>
-						<Label *ngIf="newPassword.errors?.pattern && newPassword.touched" text="Enter valid new password"></Label>
+						<Label *ngIf="newPassword.errors?.minlength && newPassword.touched" text="Your password must include at least 8 characters"></Label>
 					</StackLayout>
 				</GridLayout>
 
 				<GridLayout rows="30, auto,auto" marginBottom="5">	
-					<TextField  row="1" #confirmPassword="ngModel" hint="&#xf023; Enter Confirm Password"  class="fa" [(ngModel)]="passwordInfo.confirmPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" (textChange)="onConfirmPassword($event)" name="confirmPassword" returnKeyType="done" required [pattern]="passwordpattern"></TextField> 
+					<TextField  row="1" #confirmNewPassword="ngModel" hint="&#xf023; Enter Confirm Password"  class="fa" [(ngModel)]="passwordInfo.confirmNewPassword" borderBottomWidth="2" borderBottomColor="#A9A9A9" padding="2" (textChange)="onconfirmNewPassword($event)" name="confirmNewPassword" returnKeyType="done" required minlength="8"></TextField> 
 					<StackLayout row="2" *ngIf="matchpass" class="text-danger">
 						<Label text="New and Confirm Password didn't match"></Label>
-					</StackLayout>
-					
-					<StackLayout row="2" *ngIf="confirmPassword.invalid && confirmPassword.touched" class="text-danger">
-						<Label *ngIf="confirmPassword.errors?.pattern && confirmPassword.touched" text="Confirm Password is required"></Label>
 					</StackLayout>
 				</GridLayout>
 
 
 				<StackLayout class="p-t-10">
-					<Button text="UPDATE" class="btn btn-primary btn-active btn-rounded-lg" [isEnabled]="oldPassword.valid && newPassword.valid && confirmPassword.valid && !matchpass" (tap)="onPasswordSubmit(passwordInfo)"></Button> 
+					<Button text="UPDATE" class="btn btn-primary btn-active btn-rounded-lg" [isEnabled]="oldPassword.valid && newPassword.valid && confirmNewPassword.valid && !matchpass" (tap)="onPasswordSubmit(passwordInfo)"></Button> 
 				</StackLayout>
 				<StackLayout class="m-y-5" (tap)="changePassword()">
 					<Label text="&#xf007; Profile" fontSize="16" class="fa text-primary text-center p-20"></Label>
@@ -97,57 +93,79 @@
 	<StackLayout *tabItem="{title: 'Address'}">
 		<StackLayout>
 			<ScrollView>
-			<GridLayout rows="auto,auto,auto,auto,auto,auto,auto,*" class="m-t-5">
-				<GridLayout row="1">
-					<GridLayot row="0" columns="auto,*" class="m-x-30">
-						<StackLayout col="0" class="p-20">
-							<Label text="&#xf024;  " class="fa" fontSize="16"></Label>
-						</StackLayout>
-						<TextField col="1" hint="India" editable= "false" class="m-x-30 p-l-20"></TextField> 
-					</GridLayot>
-				</GridLayout>
+				<GridLayout rows="auto,auto,auto,auto,auto,auto,auto,*" class="m-t-5">
+					<GridLayout row="1">
+						<GridLayot row="0" columns="auto,*" class="m-x-30">
+							<StackLayout col="0" class="p-20">
+								<Label text="&#xf024;  " class="fa" fontSize="16"></Label>
+							</StackLayout>
+							<TextField col="1" hint="India" text="India"  editable= "false"  #country="ngModel" [(ngModel)]="India" class="m-x-30 p-l-20"></TextField>
+						</GridLayot>
+					</GridLayout>
 
-				<GridLayout row="2">
-					<GridLayot row="0" columns="auto,*" class="m-x-30">
-						<StackLayout col="0" class="p-20">
-							<Label text="&#xf124; " class="fa" fontSize="14"></Label>
-						</StackLayout>
-						<TextField col="1" hint="Enter Your State" #state="ngModel" [(ngModel)]="addressInfo.state" class="m-x-30 p-l-20"></TextField> 
-					</GridLayot>
-				</GridLayout>
+					<GridLayout row="2">
+						<GridLayot row="0" rows="auto,auto" columns="auto,*" class="m-x-30">
+							<StackLayout col="0" class="p-20">
+								<Label text="&#xf124; " class="fa" fontSize="14"></Label>
+							</StackLayout>
+							<TextField row="0" col="1" hint="Enter Your State" #state="ngModel" required minlength="2" maxlength="50" [(ngModel)]="addressInfo.state" class="m-x-30 p-l-20"></TextField> 
+							<StackLayout row="1" col="1" *ngIf="state.invalid && state.touched" class="text-danger p-l-25">
+								<Label *ngIf="state.errors?.required && state.touched" text="State is required"></Label>
+								<Label *ngIf="state.errors?.minlength && state.touched" text="State must include at least 2 characters"></Label>
+								<Label *ngIf="state.errors?.maxlength && state.touched" text="State can be of max 50 characters"></Label>
+							</StackLayout>
 
-				<GridLayout row="3">
-					<GridLayot row="0" columns="auto,*" class="m-x-30">
-						<StackLayout col="0" class="p-20">
-							<Label text="&#xf015; " class="fa" fontSize="17"></Label>
-						</StackLayout>
-						<TextField col="1" hint="Enter Your City" #city="ngModel" [(ngModel)]="addressInfo.city" class="m-x-30 p-l-20"></TextField> 
-					</GridLayot>
-				</GridLayout>
+						</GridLayot>
+					</GridLayout>
 
-				<GridLayout row="4">
-					<GridLayot row="0" columns="auto,*" class="m-x-30">
-						<StackLayout col="0" class="p-20">
-							<Label text="&#xf276; " class="fa" fontSize="17"></Label>
-						</StackLayout>
-						<TextField col="1" hint="Enter Pin Code" #pinCode="ngModel" [(ngModel)]="addressInfo.pinCode" class="m-x-30 p-l-20"></TextField> 
-					</GridLayot>
-				</GridLayout>
+					<GridLayout row="3">
+						<GridLayot row="0" rows="auto,auto" columns="auto,*" class="m-x-30">
+							<StackLayout col="0" class="p-20">
+								<Label text="&#xf015; " class="fa" fontSize="17"></Label>
+							</StackLayout>
+							<TextField col="1" hint="Enter Your City" #city="ngModel" required minlength="2" maxlength="50" [(ngModel)]="addressInfo.city" class="m-x-30 p-l-20"></TextField> 
+							<StackLayout row="1" col="1" *ngIf="city.invalid && city.touched" class="text-danger p-l-25">
+								<Label *ngIf="city.errors?.required && city.touched" text="City is required"></Label>
+								<Label *ngIf="city.errors?.minlength && city.touched" text="City must include at least 2 characters"></Label>
+								<Label *ngIf="city.errors?.maxlength && city.touched" text="City can be of max 50 characters"></Label>
+							</StackLayout>
+						</GridLayot>
+					</GridLayout>
 
-				<GridLayout row="5">
-					<GridLayot row="0" columns="auto,*" class="m-x-30">
-						<StackLayout col="0" class="p-20">
-							<Label text="&#xf041; " class="fa" fontSize="17"></Label>
-						</StackLayout>
-						<TextField col="1" hint="Enter Your Address"  #address="ngModel" [(ngModel)]="addressInfo.address" class="m-x-30 p-l-20"></TextField> 
-					</GridLayot>
-				</GridLayout>
+					<GridLayout row="4">
+						<GridLayot row="0" rows="auto,auto" columns="auto,*" class="m-x-30">
+							<StackLayout col="0" class="p-20">
+								<Label text="&#xf276; " class="fa" fontSize="17"></Label>
+							</StackLayout>																		
+							<TextField col="1" hint="Enter Pin Code" #pincode="ngModel" required maxlength="6" [(ngModel)]="addressInfo.pincode" class="m-x-30 p-l-20"></TextField> 
+							<StackLayout row="1" col="1" *ngIf="pincode.invalid && pincode.touched" class="text-danger p-l-25">
+								<Label *ngIf="pincode.errors?.required && pincode.touched" text="Pincode is required"></Label>
+								<Label *ngIf="state.errors?.maxlength && pincode.touched" text="Pincode can be of max 6 digits"></Label>
+							</StackLayout>
+						</GridLayot>
+					</GridLayout>
 
-				<GridLayout row="6">
-					<Button text="Update" class="btn btn-primary btn-active btn-rounded-lg m-t-4 m-x-15" (tap)="onSubmitAddress(addressInfo)"></Button> 
-				</GridLayout>			
-			</GridLayout>
-		</ScrollView>
+					<GridLayout row="5">
+						<GridLayot row="0" rows="auto,auto" columns="auto,*" class="m-x-30">
+							<StackLayout col="0" class="p-20">
+								<Label text="&#xf041; " class="fa" fontSize="17"></Label>
+							</StackLayout>
+							<TextField col="1" hint="Enter Your Address" minlength="5" maxlength="200" required  #address="ngModel" [(ngModel)]="addressInfo.address" class="m-x-30 p-l-20"></TextField> 
+							<StackLayout row="1" col="1" *ngIf="address.invalid && address.touched" class="text-danger p-l-25">
+								<Label *ngIf="address.errors?.required && address.touched" text="Address is required"></Label>
+								<Label *ngIf="address.errors?.minlength && address.touched" text="Address must include at least 5 characters"></Label>
+								<Label *ngIf="address.errors?.maxlength && address.touched" text="Address can be of max 200 characters"></Label>
+							</StackLayout>
+						</GridLayot>
+					</GridLayout>
+
+					<GridLayout row="6">
+						<Button text="Update" [isEnabled]="state.valid && city.valid && pincode.valid && address.valid"  class="btn btn-primary btn-active btn-rounded-lg m-t-4 m-x-15" (tap)="onSubmitAddress(addressInfo)"></Button> 
+					</GridLayout>			
+				</GridLayout>
+			</ScrollView>
 		</StackLayout>
 	</StackLayout>
 </TabView>
+
+<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>
