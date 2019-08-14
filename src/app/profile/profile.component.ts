@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild} from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { TabView } from "tns-core-modules/ui/tab-view";
@@ -40,7 +40,9 @@ export class ProfileComponent implements OnInit {
 	public newPass:string="";
 	public confirmPass:string="";
 	public matchpass:boolean=false;
+	public showButton:boolean=false;
 	public passwordpattern=ValidationConfig.PASSWORD_PATTERN;
+	public mobilepattern=ValidationConfig.MOB_NO_PATTERN;
 
 
 	constructor(private routerExtensions: RouterExtensions,
@@ -60,37 +62,58 @@ export class ProfileComponent implements OnInit {
 	}
 
 	onSubmit(personalInfo:any){
+		let userInfo={
+			name:personalInfo.name,
+			email:personalInfo.email,
+			mobile:personalInfo.mobile
+		}
 
-	}
-
-	onSubmitAddress(addressInfo:any){
 		this.errorMessage="";
-		addressInfo.country="India";
-		console.log(JSON.stringify(addressInfo));
+		this.successMessage="";
 		this.isLoading=true;
-		this.studentService.profileAddress(addressInfo).subscribe(response=>{
+		this.studentService.updateBasicInfo(userInfo).subscribe(response=>{
 			if(response['success']) {
 				this.isLoading=false;
-				this.messageService.successMessage('Address', 'Successfully Changed');
+				this.messageService.onSuccess(response['msg']);
 			}
 		}, error=>{
 			this.isLoading=false;
 			this.errorMessage=error.error.msg;
 			this.messageService.onErrorMessage(this.errorMessage);
-		});
+		});  
+	}
+
+	onSubmitAddress(addressInfo:any){
+		this.errorMessage="";
+		if (Object.keys(addressInfo).every(function(x) { return addressInfo[x]===''|| addressInfo[x]===null;}) === false) {
+			addressInfo.country="India";
+			this.isLoading=true;
+			this.studentService.profileAddress(addressInfo).subscribe(response=>{
+				if(response['success']) {
+					this.isLoading=false;
+					this.messageService.onSuccess(response['msg']);
+				}
+			}, error=>{
+				this.isLoading=false;
+				this.errorMessage=error.error.msg;
+				this.messageService.onErrorMessage(this.errorMessage);
+			});
+		} else {
+			this.messageService.onErrorMessage("Please fill all the fields");
+		}
+
+
 	}
 
 	//input event on new password field
 	onNewPassword(args){
 		let newPassword = <TextField>args.object;
 		this.newPass=newPassword.text.trim();
-		console.log(this.newPass);
 	}
 
 	onconfirmNewPassword(args){
 		let confirmNewPassword = <TextField>args.object;
 		this.confirmPass=confirmNewPassword.text.trim();
-		console.log(this.confirmPass);
 		if(this.confirmPass!=this.newPass){
 			this.matchpass=true;
 			return;
@@ -101,14 +124,19 @@ export class ProfileComponent implements OnInit {
 
 	}
 
+
 	onPasswordSubmit(passwordInfo:any){
 		this.isLoading=true;
 		this.studentService.changePassword(passwordInfo).subscribe(response=>{
-          console.log(JSON.stringify(response['data']));
-			if(response['data']){
+			console.log(JSON.stringify(response['data']));
+			if(response['success']){
 				this.isLoading=false;
-				this.passwordInfo=null;
-				this.messageService.successMessage('Password', 'Successfully Updated');
+				this.passwordInfo={
+					oldPassword:'',
+					newPassword:'',
+					confirmNewPassword:''
+				};
+				this.messageService.onSuccess(response['msg']);
 			}
 		},error=>{
 			this.isLoading=false;
@@ -130,7 +158,10 @@ export class ProfileComponent implements OnInit {
 			if(response['data']){
 				this.userData=response['data'];
 				this.personalInfo=this.userData;
-        this.addressInfo=this.userData.addressInfo;
+			}
+
+			if(response['data']['addressInfo']){
+				this.addressInfo=this.userData.addressInfo;
 			}
 		}, (error)=>{
 			this.errorMessage=error.msg; 

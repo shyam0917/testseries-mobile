@@ -25,9 +25,11 @@ export class SignupComponent implements OnInit {
 		password: ""
 	};
 	public errorMessage: any;
+	public successMessage:string="";
 	public emailpattern=ValidationConfig.EMAIL_PATTERN;
 	public mobilepattern=ValidationConfig.MOB_NO_PATTERN;
-	public showVarification: boolean=false;
+	public passwordpattern=ValidationConfig.PASSWORD_PATTERN;
+	public showVerification: boolean=false;
 	public isLoading:boolean=false;
 
 	constructor(private routerExtensions: RouterExtensions,
@@ -70,17 +72,24 @@ export class SignupComponent implements OnInit {
 		textField.borderBottomColor = new Color('#A9A9A9');
 	}
 
+	clearForm(){
+		this.signupInfo = {
+			name:"",
+			email: "",
+			mobile:"",
+			password: ""
+		};
+	}
+
 	onSubmit(registerData){
-		debugger;
 		let student = registerData;
 		this.isLoading=true;
 		this.registerService.register(student).subscribe(data=>{
-			debugger;
 			this.isLoading=false;
 			if(data['success']){
 				this.messageService.onSuccess("Student Successfully Registered");
-			this.routerExtensions.navigate(['/login']);
-				this.showVarification=true;
+				this.successMessage="Please verify your Email, We have sent a link to your Gmail";
+				this.clearForm();
 			}
 		},error=>{
 			this.isLoading=false;

@@ -76,8 +76,8 @@ export class MyCoursesComponent implements OnInit {
 							this.totalItems=response['data'].length;
 						}
 					},error=>{
-						this.errorMessage=error.msg;
-						this.messageService.onError(this.errorMessage);
+			this.errorMessage=error.error.msg;
+			this.messageService.onErrorMessage(this.errorMessage);
 					}
 					)
 				}

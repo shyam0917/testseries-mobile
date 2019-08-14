@@ -118,4 +118,14 @@ export class CourseService {
 				}));
 	}
 
+		// to add instamojo payment getway
+	getPayment(payInfo:any){
+		return this.http.post(AppConfig.API_HOST+'/api/courses/pay',payInfo,this.authorizationService.authorization()).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
+
 }

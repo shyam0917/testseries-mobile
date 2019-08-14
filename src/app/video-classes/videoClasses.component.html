@@ -24,7 +24,7 @@
 				<Label class="list-group-item-text font-weight-bold fa p-l-5" fontSize="14" text="Price:- {{course?.amount}} &#xf156;"></Label> 
 			</StackLayout>
 				<GridLayout row="2" columns="*,*" class="m-t-5">
-					<Button col="0" text="&#xf02d; Take Course" width="45%" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg fa p-l-5"></Button>
+					<Button col="0" text="&#xf02d; Take Course" (tap)="setPayment(course)" width="45%" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg fa p-l-5"></Button>
 						<Button col="1" text="&#xf06e; Preview" width="45%" (tap)="showPreview(course?._id)" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg fa"></Button>
 						</GridLayout>     
 					</GridLayout>

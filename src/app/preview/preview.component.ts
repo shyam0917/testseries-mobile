@@ -14,6 +14,7 @@ export class PreviewComponent implements OnInit {
 	public courseId:any;
 	public previewData:any;
 	public isLoading:boolean=false;
+	public errorMessage:any;
 
 	constructor(private route: ActivatedRoute,
 		private studentService: StudentService,
@@ -37,17 +38,18 @@ export class PreviewComponent implements OnInit {
 				console.log(JSON.stringify(this.previewData.amount));
 			}
 		},err=>{
-			this.messageService.onError(err.err);
+			this.errorMessage=err.error.msg;
+			this.messageService.onErrorMessage(this.errorMessage);
 		})
 
 	}
 
 	public toggle(preitem) {
-	preitem.visible = !preitem.visible;
-}
+		preitem.visible = !preitem.visible;
+	}
 
-goBack(){
-	this.routerExtensions.backToPreviousPage();
-}
+	goBack(){
+		this.routerExtensions.backToPreviousPage();
+	}
 
 }

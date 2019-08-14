@@ -6,6 +6,7 @@ import { AuthenticationService } from './../services/authentication.service';
 import { RouterExtensions } from "nativescript-angular/router";
 import { MessageService } from './../services/message.service';
 import { CourseService } from './../services/course.service';
+import * as UtilsModule from "tns-core-modules/utils/utils";
 import * as app from "tns-core-modules/application";
 
 @Component({
@@ -80,6 +81,23 @@ export class VideoClassesComponent implements OnInit {
 		},error=>{
 			this.errorMessage=error.json().msg;
 			this.messageService.onError(this.errorMessage);
+		}
+		)
+	}
+
+			// getting payment from user -
+	setPayment(payDetails){
+		this.isLoading=true;
+		this.courseService.getPayment(payDetails).subscribe(response=>{
+			this.isLoading=false;
+			if(response['data']){
+			let url = response['data'];
+				UtilsModule.openUrl(url); 
+			}
+		},error=>{
+			this.errorMessage=error.error.msg;
+			this.isLoading=false;
+			this.messageService.onErrorMessage(this.errorMessage);
 		}
 		)
 	}
