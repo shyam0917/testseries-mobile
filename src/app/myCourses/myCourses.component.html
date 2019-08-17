@@ -11,20 +11,19 @@
 </ActionBar>
 
 
-<GridView [items]="courses" colWidth="50%" rowHeight="{{rowHeight}}">
-	<ng-template let-course="item" let-odd="odd">
-		<StackLayout margin="10" borderColor="black" borderWidth="1" borderRadius="3" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
-			<GridLayout rows="* auto" columns="*" class="list-group-item active" style="border:1;">
-				<Image row="0" col="0" src="res://courseimg" stretch="aspectFill"></Image>
-				<StackLayout row="1" col="0" backgroundColor="white" class="list-group-item">
-					<Label class="text-center set-dark" fontSize="15" [text]="course?.courseName"></Label> 
-				 <StackLayout class="hr-light m-t-3 m-x-30"></StackLayout>
-					<Button text="Play" fontSize="11" class="btn btn-primary btn-active btn-rounded-lg m-t-4" (tap)="gotoPlaylist(course?.Videos,course?.courseName)"></Button> 
-				</StackLayout>
-			</GridLayout>
-		</StackLayout>
-	</ng-template>
-</GridView>
+<ListView class="list-group" [items]="courses" separatorColor="#e0e0e0">
+	<ng-template let-course="item">
+		<GridLayout rows="auto" columns="*" class="p-5 set-list" backgroundColor="#e0e0e0" (tap)="gotoPlaylist(course?.Videos,course?.courseName)">
+			<GridLayout row="0"  columns="auto,*" class="p-5" col="0" backgroundColor="white">
+			<Image col="0" width=55 height=55 borderRadius="50" class="p-5" stretch="aspectFill"  src="res://courseimg"></Image>
+				<StackLayout col="1">
+				<Label class="set-dark p-5 p-t-10" fontSize="16" text="{{course?.courseName| slice:0:30}}"></Label>
+			</StackLayout>
+		</GridLayout>     
+				</GridLayout>
+			</ng-template>
+		</ListView>
+
 
 
 <!-- 		<ListView class="list-group" [items]="courses" (itemTap)="onItemTapFirstList($event)" separatorColor="transparent">

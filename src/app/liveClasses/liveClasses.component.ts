@@ -11,8 +11,10 @@ import * as app from "tns-core-modules/application";
 @Component({
 	selector: "LiveClasses",
 	moduleId: module.id,
-	templateUrl: "./liveClasses.component.html"
+	templateUrl: "./liveClasses.component.html",
+	styleUrls:['./liveClasses.component.scss']
 })
+
 export class LiveClassesComponent implements OnInit {
   public role: string="";
 	public urlPrefix: string="";

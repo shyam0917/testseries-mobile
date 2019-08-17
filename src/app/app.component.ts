@@ -39,12 +39,12 @@ export class AppComponent implements OnInit,OnDestroy {
 
 	ngOnInit(): void {
 		this._activatedUrl = "/home";
+				this.getUserDetail();
 		this._sideDrawerTransition = new SlideInOnTopTransition();
-
+     
 		this.router.events
 		.pipe(filter((event: any) => event instanceof NavigationEnd))
 		.subscribe((event: NavigationEnd) => this._activatedUrl = event.urlAfterRedirects);
-		this.getUserDetail();
 		this.connectionType = this.connectionToString(Connectivity.getConnectionType());
 		Connectivity.startMonitoring(connectionType => {
 			this.zone.run(() => {

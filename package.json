@@ -27,6 +27,8 @@
 		"nativescript-angular": "~7.1.0",
 		"nativescript-cardview": "^3.2.0",
 		"nativescript-grid-view": "^5.1.0",
+		"nativescript-imagecropper": "^1.0.6",
+		"nativescript-imagepicker": "^7.0.0",
 		"nativescript-localstorage": "^2.0.1",
 		"nativescript-phone": "^1.4.0",
 		"nativescript-screen-orientation": "^2.0.0",

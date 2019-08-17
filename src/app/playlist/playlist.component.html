@@ -12,16 +12,18 @@
 <NavigationButton ios:visibility="collapsed" icon="res://ic_arrow_back_white_24dp" (tap)="goBack()"></NavigationButton>
 </ActionBar>
 
-<ScrollView>
-	<StackLayout>
-		<ListView height="150" [items]="courseData" class="list-group">
-			<ng-template let-course="item" let-i="index" let-odd="odd" let-even="even">
-				<GridLayout columns="auto,auto" class="list-group-item" (tap)="openPlayer(course?.videUrl)">
-					<Label col="0" text="&#xf16a;" fontSize="20" class="fa text-danger" (tap)="openPlayer(course?.videUrl)"></Label>
-					<Label col="1" [text]="course?.title" textWrap="true" width="90%" (tap)="openPlayer(course?.videUrl)" class="p-l-5 m-l-5"></Label>
+
+	<ListView class="list-group" [items]="courseData" separatorColor="#e0e0e0">
+	<ng-template let-course="item">
+		<GridLayout rows="auto" columns="*" class="p-5 set-list" backgroundColor="#e0e0e0" (tap)="openPlayer(course?.videUrl)">
+			<GridLayout row="0"  columns="auto,*" class="p-5" col="0" backgroundColor="white">
+			<Image col="0" width=55 height=55 borderRadius="50" class="p-5" stretch="aspectFill"  src="res://courseimg"></Image>
+				<StackLayout col="1">
+				<Label class="set-dark p-5 p-t-10" fontSize="16" text="{{course?.title| slice:0:30}}"></Label>
+			</StackLayout>
+		</GridLayout>     
 				</GridLayout>
 			</ng-template>
 		</ListView>
-	</StackLayout>
-</ScrollView>
+
 

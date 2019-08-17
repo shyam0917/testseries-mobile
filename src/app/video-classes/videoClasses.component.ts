@@ -16,8 +16,6 @@ import * as app from "tns-core-modules/application";
 })
 export class VideoClassesComponent implements OnInit {
 	public role: string="";
-	public cardPath: string= new CommonConfig().CARD_PATH;
-	public urlPrefix: string="";
 	selectedStatus:any=[];
 	contentStatus: any=[];
 	courseData:any=[];
@@ -30,6 +28,7 @@ export class VideoClassesComponent implements OnInit {
 	successMessage: string;
 	courseDetails:any={};
 	addCourseObject:any={};
+  courseImgPath:string=new CommonConfig().Aws_URL+'courses/';
 	subSubjectName:string='';
 	newSubjectName:string='';
 	public subsubjectArray: any=[];

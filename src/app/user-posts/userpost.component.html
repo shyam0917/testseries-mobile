@@ -15,7 +15,8 @@
 <ListView class="list-group" [items]="posts" separatorColor="white">
 	<ng-template let-post="item">
 		<GridLayout rows="auto,auto,auto" columns="90,auto" class="list-group-item active m-t-0" style="border:1;">
-			<Image  (tap)="openModal(post)" row="0" rowSpan="2" col="0" src="res://courseimg" class="m-l-0 p-l-0"></Image>
+			<Image *ngIf="post?.icon" stretch="aspectFill" (tap)="openModal(post)" row="0" rowSpan="2" col="0" [src]="courseImgPath+post.icon" class="m-l-0 p-l-0"></Image>
+				<Image *ngIf="!post?.icon" (tap)="openModal(post)" row="0" rowSpan="2" col="0" [src]="postImg" class="m-l-0 p-l-0"></Image>
 			<Label (tap)="openModal(post)" row="0" col="1" textWrap="true" width="85%" fontSize="15" [text]="post.title" class="m-t-0 m-b-0 p-l-10 font-weight-Italic"></Label> 
 			<Label (tap)="openModal(post)" row="1" col="1" class="m-t-0 p-t-5 p-b-5 m-l-10 fa" fontSize="14" fontAttributes="Italic" text="&#xf073;  {{post?.createdBy.date |  date:'dd-MMM-yyyy, HH:mm'}}"></Label>
 			<Label row="2" (tap)="openLink(post.url)" colSpan="2" text="{{post.url| slice:0:40}} .." class="set-url"></Label>

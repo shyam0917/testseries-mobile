@@ -4,8 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { StudentService } from './../services/student.service';
 import { MessageService } from './../services/message.service';
 import * as dialogs from "tns-core-modules/ui/dialogs";
-// import { ModalComponent } from './../modal/modal.component';
-// import { ModalDialogService, ModalDialogOptions } from "nativesdirectives/dialogs";
+import { CommonConfig } from '../config/common-config.constants';
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as UtilsModule from "tns-core-modules/utils/utils";
@@ -29,8 +28,10 @@ export class UserPostComponent implements OnInit {
 	posts:any=[];
 	public dataArr: any;
 	public totalItems: number = 0;
+	public postImg:string="res://courseimg";
 	errorMessage: string;
 	successMessage: string;
+    courseImgPath:string=new CommonConfig().Aws_URL+'posts/';
 	postDetails:any={};
 
 	constructor(private route: ActivatedRoute,
@@ -67,6 +68,7 @@ export class UserPostComponent implements OnInit {
 						return item;
 					}
 				})
+
 				console.log(JSON.stringify(this.posts));
 			}
 		},error=>{

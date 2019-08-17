@@ -14,6 +14,8 @@ export class CommonConfig {
 		WEB: "Web"
 	};
 
+	public  Aws_URL = 'https://testseriescourses.s3.ap-south-1.amazonaws.com/';
+
 	public static PaidOption=['Paid','Free']
 	public static Vdocomnt =['Show Comment','No Comment']
 	public static CommentOption=['Single Comment','Multiple Comment']
@@ -22,7 +24,7 @@ export class CommonConfig {
 	// to set the content value 
 	public static STATUS_CONTENT = ['Active','Inactive','Deleted','Drafted','Submitted','Rejected'];
 	public static FLAGS=['0', '1', '2','3']; // 0 - email change , 1- mobile change 2- both change 3- email and mobile both not change
-	 // SET STATUS
+	// SET STATUS
 	public static STATUS = {
 		ACTIVE : 'Active',
 		INACTIVE: 'Inactive'

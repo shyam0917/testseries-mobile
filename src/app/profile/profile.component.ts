@@ -4,9 +4,13 @@ import * as app from "tns-core-modules/application";
 import { TabView } from "tns-core-modules/ui/tab-view";
 import { ValidationConfig } from "../config/validation-config.constants";
 import { TextField } from 'ui/text-field'; 
+import { ImageCropper } from "nativescript-imagecropper";
 import { StudentService } from '../services/student.service';
 import { MessageService } from '../services/message.service';
 import { RouterExtensions } from "nativescript-angular/router";
+import {ImageSource, fromFile, fromResource, fromBase64} from "tns-core-modules/image-source";
+import {Folder, path, knownFolders} from "tns-core-modules/file-system";
+import * as imagepicker from "nativescript-imagepicker";
 import frameModule = require("ui/frame");
 
 @Component({
@@ -82,6 +86,63 @@ export class ProfileComponent implements OnInit {
 			this.messageService.onErrorMessage(this.errorMessage);
 		});  
 	}
+
+selectImage(){
+	let context = imagepicker.create({ mode: "single" }); 
+			this.startSelection(context);
+
+}
+
+startSelection(context){
+	context
+	.authorize()
+	.then( () =>{
+
+		return context.present();
+	})
+	.then( (selection) =>{
+		selection.forEach( (selected_item) =>{
+			var path=selected_item.android;
+			var pattern = /[^/]*$/;
+			var imageName = JSON.stringify(path.match(pattern));	
+			let imgstr=imageName.replace(/[^a-zA-Z0-9.]/g,'');
+
+			let extn=imgstr.split(".").pop();
+			if(extn.match(/^(|jpg|jpeg|png)$/)){
+				// const imageFromLocalFile = ImageSource.fromFile(path);
+				const imageFromLocalFile: ImageSource = <ImageSource> fromFile(path);
+				var imageCropper = new ImageCropper();
+				imageCropper.show(imageFromLocalFile,{width:300,height:300, lockSquare: true}).then((args) => {
+ console.dir(args);
+					 if(args.image !== null){
+					 	debugger;
+					 	console.log(args);
+					// 	let payload="data:image/" +extn + ";base64,";
+					// 	this.image = payload + args.image.toBase64String("jpeg");					
+					// 	var stringLength = this.image.length - payload.length;
+					// 	var sizeInBytes = 4 * Math.ceil((stringLength / 3))*0.5624896334383812;
+					// 	var sizeInKb=sizeInBytes/1000;
+					// 	if(sizeInKb>AppConfig.PROFILE_IMAGE_SIZE[1]){
+					// 		Toast.makeText("File Size is too large").show();
+					// 	}else{
+					// 		this.uploadprofileImage(this.image);
+					// 	}	
+					 }
+				})
+				.catch(function(e){
+					console.log(e)
+					// Toast.makeText("Oops! Something went wrong").show();
+				});
+			}else{
+				// Toast.makeText("Image type is not supported").show();
+			}}
+			);
+	}).catch(function (e) {
+		// Toast.makeText("Oops! Something went wrong").show();
+	});
+}
+
+
 
 	onSubmitAddress(addressInfo:any){
 		this.errorMessage="";

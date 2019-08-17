@@ -11,7 +11,24 @@
 </ActionBar>
 
 
-<GridView [items]="courses" colWidth="50%" rowHeight="220">
+<ListView class="list-group" [items]="courses" separatorColor="#e0e0e0">
+	<ng-template let-course="item">
+		<GridLayout rows="auto" columns="*" class="p-5 set-list" backgroundColor="#e0e0e0">
+			<GridLayout row="0" rows="auto,auto"  columns="auto,*" class="p-5" col="0" backgroundColor="white">
+			<Image *ngIf="course?.icon" col="0" rowSpan="2" width=55 height=55 borderRadius="50" class="p-5" stretch="aspectFill"  [src]="courseImgPath+course.icon"></Image>	
+			<Image *ngIf="!course?.icon" col="0" rowSpan="2" width=55 height=55 borderRadius="50" class="p-5" stretch="aspectFill"  src="res://courseimg"></Image>
+				<StackLayout col="1">
+				<Label class="set-dark p-5" fontSize="16" text="{{course?.courseName| slice:0:30}}"></Label>
+			</StackLayout>
+			<StackLayout row="1" col="1">
+				<Label fontSize="14" class="p-l-5" text="Aditya Sir"></Label>
+			</StackLayout>
+		</GridLayout>     
+				</GridLayout>
+			</ng-template>
+		</ListView>
+
+<!-- <GridView [items]="courses" colWidth="50%" rowHeight="220">
 	<ng-template let-course="item" let-odd="odd">
 		<StackLayout margin="10" borderColor="black" borderWidth="1" borderRadius="3" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
 	<GridLayout rows="* auto" columns="*" class="list-group-item active" style="border:1;">
@@ -31,7 +48,7 @@
 				</GridLayout>
 		</StackLayout>
 	</ng-template>
-</GridView>
+</GridView> -->
 
 
 
