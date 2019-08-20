@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from "@angula
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { getRootView } from "tns-core-modules/application";
 import { WebView, LoadEventData } from "tns-core-modules/ui/web-view";
+import { Page } from "tns-core-modules/ui/page";
+import { setCurrentOrientation, orientationCleanup } from 'nativescript-screen-orientation';
 import * as app from "tns-core-modules/application";
 var webViewInterfaceModule = require('nativescript-webview-interface');
 import frameModule = require("ui/frame");
@@ -16,12 +18,14 @@ export class HomeComponent implements OnInit,AfterViewInit {
 // 	 public player:any;
 // public oWebViewInterface:any;
 private drawer: RadSideDrawer;
-	
-	constructor() {
-		// Use the component constructor to inject providers.
+public name:any;	
+	constructor(private page: Page) {
+			setCurrentOrientation("landscape", function () {
+		});
 	}
 
 	ngOnInit(): void {
+		this.page.actionBarHidden = true;
 		    // this.setupWebViewInterface();
 		// Init your component properties here.
 	}
@@ -31,6 +35,7 @@ private drawer: RadSideDrawer;
         setTimeout(() => {
             this.drawer = <RadSideDrawer>getRootView();
             this.drawer.gesturesEnabled = true;
+            this.name="Adiya";
         }, 100);
     }
 

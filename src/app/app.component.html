@@ -7,7 +7,8 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
 <RadSideDrawer [drawerTransition]="sideDrawerTransition">
 	<GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
 		<StackLayout row="0" class="sidedrawer-header">
-			<Image  class="sidedrawer-header-image" width=80 height=80 borderRadius="50" stretch="aspectFill" src="res://courseimg"></Image>
+			<Image *ngIf="dashboardImage" class="sidedrawer-header-image" width=80 height=80 borderRadius="50" stretch="aspectFill" [src]="profileImgPath+dashboardImage"></Image>
+			<Image *ngIf="!dashboardImage" class="sidedrawer-header-image" width=80 height=80 borderRadius="50" stretch="aspectFill" src="res://courseimg"></Image>
 			<!-- <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label> -->
 			<Label class="sidedrawer-header-brand fa" text="&#xf007; {{name}}"></Label>
 			<!-- 		<Label class="footnote" text="username@mail.com"></Label> -->

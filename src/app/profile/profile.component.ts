@@ -7,7 +7,10 @@ import { TextField } from 'ui/text-field';
 import { ImageCropper } from "nativescript-imagecropper";
 import { StudentService } from '../services/student.service';
 import { MessageService } from '../services/message.service';
+import { ProfileService } from '../services/profile.service';
 import { RouterExtensions } from "nativescript-angular/router";
+import { AppConfig } from '../config/app-config.constants';
+import { CommonConfig } from '../config/common-config.constants';
 import {ImageSource, fromFile, fromResource, fromBase64} from "tns-core-modules/image-source";
 import {Folder, path, knownFolders} from "tns-core-modules/file-system";
 import * as imagepicker from "nativescript-imagepicker";
@@ -45,12 +48,15 @@ export class ProfileComponent implements OnInit {
 	public confirmPass:string="";
 	public matchpass:boolean=false;
 	public showButton:boolean=false;
+	profileImgPath:string=new CommonConfig().Aws_URL+'profiles/';
+
 	public passwordpattern=ValidationConfig.PASSWORD_PATTERN;
 	public mobilepattern=ValidationConfig.MOB_NO_PATTERN;
-
+  public image:string="";
 
 	constructor(private routerExtensions: RouterExtensions,
 		private studentService: StudentService,
+		private profileService: ProfileService,
 		private messageService: MessageService) {
 		// Use the component constructor to inject providers.
 	}
@@ -71,7 +77,7 @@ export class ProfileComponent implements OnInit {
 			email:personalInfo.email,
 			mobile:personalInfo.mobile
 		}
-
+          console.log(JSON.stringify(userInfo));
 		this.errorMessage="";
 		this.successMessage="";
 		this.isLoading=true;
@@ -113,36 +119,55 @@ startSelection(context){
 				const imageFromLocalFile: ImageSource = <ImageSource> fromFile(path);
 				var imageCropper = new ImageCropper();
 				imageCropper.show(imageFromLocalFile,{width:300,height:300, lockSquare: true}).then((args) => {
- console.dir(args);
+ 
 					 if(args.image !== null){
-					 	debugger;
-					 	console.log(args);
-					// 	let payload="data:image/" +extn + ";base64,";
-					// 	this.image = payload + args.image.toBase64String("jpeg");					
-					// 	var stringLength = this.image.length - payload.length;
-					// 	var sizeInBytes = 4 * Math.ceil((stringLength / 3))*0.5624896334383812;
-					// 	var sizeInKb=sizeInBytes/1000;
-					// 	if(sizeInKb>AppConfig.PROFILE_IMAGE_SIZE[1]){
-					// 		Toast.makeText("File Size is too large").show();
-					// 	}else{
-					// 		this.uploadprofileImage(this.image);
-					// 	}	
+						let payload="data:image/" +extn + ";base64,";
+					this.image = payload + args.image.toBase64String("jpeg");					
+						var stringLength = this.image.length;
+						var sizeInBytes = 4 * Math.ceil((stringLength / 3))*0.5624896334383812;
+						var sizeInKb=sizeInBytes/1000;
+	
+						if(sizeInKb>AppConfig.PROFILE_IMAGE_SIZE[1]){
+							console.log("File Size is too large");
+						}else{
+							this.uploadprofileImage(this.image);
+						}	
 					 }
 				})
 				.catch(function(e){
-					console.log(e)
-					// Toast.makeText("Oops! Something went wrong").show();
+				this.messageService.onErrorMessage("Oops! Something went wrong");
 				});
 			}else{
-				// Toast.makeText("Image type is not supported").show();
+				this.messageService.onErrorMessage("Image type is not supported");
 			}}
 			);
 	}).catch(function (e) {
-		// Toast.makeText("Oops! Something went wrong").show();
+		this.messageService.onErrorMessage("Oops! Something went wrong");
 	});
 }
 
+uploadprofileImage(profileImage){
+let userInfo={
+			name:this.personalInfo.name,
+			email:this.personalInfo.email,
+			mobile:this.personalInfo.mobile,
+			icon: profileImage
+		}
 
+		this.isLoading=true;
+		this.studentService.updateBasicInfo(userInfo).subscribe(response=>{
+			if(response['success']) {
+				this.isLoading=false;
+			 this.messageService.onSuccess(response['msg']);
+			 this.getUserDetail();
+			}
+		}, error=>{
+			this.isLoading=false;
+			console.log(JSON.stringify(error));
+			this.errorMessage=error.error.msg;
+			this.messageService.onErrorMessage(this.errorMessage);
+		});  
+}
 
 	onSubmitAddress(addressInfo:any){
 		this.errorMessage="";
@@ -219,14 +244,17 @@ startSelection(context){
 			if(response['data']){
 				this.userData=response['data'];
 				this.personalInfo=this.userData;
+				if(this.userData['icon']){
+					this.profileService.updateProfile.emit(this.userData);
+				}
 			}
 
 			if(response['data']['addressInfo']){
 				this.addressInfo=this.userData.addressInfo;
 			}
 		}, (error)=>{
-			this.errorMessage=error.msg; 
-			this.messageService.onError(this.errorMessage);
+			this.errorMessage=error.error.msg; 
+			this.messageService.onErrorMessage(this.errorMessage);
 		})		
 	}
 

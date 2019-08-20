@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild, NgZone, OnDestroy } from "@angular/core";
+import { Component, OnInit, ViewChild, NgZone, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import * as Connectivity from "tns-core-modules/connectivity";
 import { NavigationEnd, Router, ActivatedRoute } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import { AuthenticationService } from "./services/authentication.service";
 import { StudentService } from "./services/student.service";
 import { MessageService } from "./services/message.service";
+import { ProfileService } from "./services/profile.service";
+import { CommonConfig } from "./config/common-config.constants";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 import { filter } from "rxjs/operators";
 import * as SocialShare from "nativescript-social-share";
@@ -17,17 +19,24 @@ import * as app from "tns-core-modules/application";
 	templateUrl: "app.component.html",
 	providers: [AuthenticationService,StudentService],
 })
+
+
 export class AppComponent implements OnInit,OnDestroy {
 	private _activatedUrl: string;
 	private _sideDrawerTransition: DrawerTransitionBase;
 	public name:any;
 	public connectionType: string;
+	public dashboardImage:any;
+profileImgPath:string=new CommonConfig().Aws_URL+'profiles/';
+
 	constructor(private router: Router,
 		private activeRoute: ActivatedRoute,
 		private zone: NgZone,
+		private cdr: ChangeDetectorRef,
 		private routerExtensions: RouterExtensions,
 		private authenticationService: AuthenticationService,
 		private messageService: MessageService,
+		private profileService: ProfileService,
 		private studentService: StudentService) {
 		if (localStorage.getItem('currentUser')) {
 			this.router.navigate(['/home']);
@@ -73,6 +82,17 @@ export class AppComponent implements OnInit,OnDestroy {
 		}
 	}
 
+	ngAfterViewInit() {
+    this.cdr.detectChanges();
+    		this.profileService.updateProfile.subscribe((profileData)=>{
+    		this.name=profileData.name;
+			if(profileData.icon){
+				this.dashboardImage=profileData.icon;
+				console.log(JSON.stringify(profileData));
+ }
+})
+}
+
 	get sideDrawerTransition(): DrawerTransitionBase {
 		return this._sideDrawerTransition;
 	}
@@ -95,11 +115,15 @@ export class AppComponent implements OnInit,OnDestroy {
 
 	// Get user detail on basis of userId
 	getUserDetail(){
-		this.studentService.getStudentInfo('student_info_q2').subscribe(response=>{
+		this.studentService.getDetails().subscribe(response=>{
 
 			if(response['data']){
 				this.name=response['data'].name;
 				console.log(this.name);
+			}
+
+			if(response['data']['icon']){
+				this.dashboardImage=response['data']['icon'];
 			}
 		}, (error:any)=> {
 			this.messageService.onError(error);
