@@ -32,8 +32,8 @@ export class PostComponent implements OnInit,OnDestroy {
 			this.videoId=JSON.parse(params.videoId);
 		});
 
-			setCurrentOrientation("landscape", function () {
-		});
+		// 	setCurrentOrientation("landscape", function () {
+		// });
 	}
 	ngOnInit(){
 		this.isLoading=true;

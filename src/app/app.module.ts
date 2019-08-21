@@ -29,7 +29,6 @@ require("nativescript-localstorage");
 	],
 	declarations: [
 	AppComponent,
-	SidebarComponent,
 	ModalComponent,
 	],
 	providers: [
