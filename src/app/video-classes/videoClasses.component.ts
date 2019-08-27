@@ -101,6 +101,18 @@ export class VideoClassesComponent implements OnInit {
 		)
 	}
 
+	gotoDemo(demoId,demoName){
+		let params = {
+			 demoId: JSON.stringify(demoId),
+			 demoName: JSON.stringify(demoName) 
+		}
+		this.routerExtensions.navigate(['/demo'], {
+			queryParams: params,
+		});
+	}
+			
+
+
 		showPreview(Id){
 		let params = {
 			 courseId: JSON.stringify(Id)

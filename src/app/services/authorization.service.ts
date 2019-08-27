@@ -24,7 +24,6 @@ export class AuthorizationService {
 	canActivate(){
 		if (localStorage.getItem('currentUser')) {
 			return this.getUserRole().map((res) =>{
-				debugger;
 				// this.userRole = res.data.userRole;
 				this.permissionsService.loadPermissions([this.userRole]);
 				this.userRoleChanged.emit(this.userRole);
@@ -70,8 +69,7 @@ export class AuthorizationService {
 		}else {
 			let token = JSON.parse(localStorage.getItem('currentUser'))['token'];
 			if (token) {
-				let headers = new HttpHeaders({ 'Authorization': token });
-				headers.append('platform',CommonConfig.APP_PLATFORM.MOB)
+				let headers = new HttpHeaders({ 'Authorization': token,'platform': CommonConfig.APP_PLATFORM.MOB});
 				if(param) {
 					let pararms= this.getParams(param);
 				let options={
@@ -107,10 +105,5 @@ export class AuthorizationService {
 	}
 
 
-	// Set Platform in request header to track application
-	setPlatform(){
-		let headers = new HttpHeaders({ 'platform': CommonConfig.APP_PLATFORM.MOB });
-		return headers;
-	}
 
 }

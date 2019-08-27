@@ -13,7 +13,7 @@ const routes: Routes = [
 	{ path: "post", loadChildren: "~/app/post/post.module#PostModule" },
 	{ path: "preview", loadChildren: "~/app/preview/preview.module#PreviewModule" },
 	{ path: "userpost", loadChildren: "~/app/user-posts/userpost.module#UserPostModule" },
-	{ path: "sidebar", loadChildren: "~/app/sidebar/sidebar.module#SidebarModule" },
+	{ path: "demo", loadChildren: "~/app/demo-courses/demoCourses.module#DemoCoursesModule" },
 	{ path: "videoClasses", loadChildren: "~/app/video-classes/videoClasses.module#VideoClassesModule" },
 	{ path: "myCourses", loadChildren: "~/app/myCourses/myCourses.module#MyCoursesModule" },
 	{ path: "liveClasses", loadChildren: "~/app/liveClasses/liveClasses.module#LiveClassesModule" }

@@ -1,18 +1,18 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
-import { SidebarRoutingModule } from "./sidebar-routing.module";
-import { SidebarComponent } from "./sidebar.component";
+import { DemoCoursesRoutingModule } from "./demoCourses-routing.module";
+import { DemoCoursesComponent } from "./demoCourses.component";
 
 @NgModule({
 	imports: [
 		NativeScriptCommonModule,
-		SidebarRoutingModule,
+		DemoCoursesRoutingModule,
 	],
 	declarations: [
-		SidebarComponent
+		DemoCoursesComponent
 	],
 	schemas: [
 		NO_ERRORS_SCHEMA
 	]
 })
-export class SidebarModule { }
+export class DemoCoursesModule { }

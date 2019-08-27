@@ -8,7 +8,6 @@ import { MessageService } from "./services/message.service";
 import { ProfileService } from "./services/profile.service";
 import { YoutubePlayerModule } from 'nativescript-youtubeplayer/angular';
 import { NativeScriptHttpModule } from "nativescript-angular";import { AppRoutingModule } from "./app-routing.module";
-import { SidebarComponent } from "./sidebar/sidebar.component";
 import { ModalComponent } from "./modal/modal.component";
 import { ModalDialogService} from "nativescript-angular/directives/dialogs";
 import { AppComponent } from "./app.component";

@@ -1,0 +1,18 @@
+<ActionBar class="action-bar">
+	<GridLayout columns="4*,*">
+		<StackLayout col="0" class="m-y-auto">
+			<Label [text]="title" class="action-bar-custom"></Label>
+		</StackLayout>
+	</GridLayout>
+	<ActionItem icon="" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+	ios.position="left">
+</ActionItem>
+<NavigationButton ios:visibility="collapsed" icon="res://ic_arrow_back_white_24dp" (tap)="goBack()"></NavigationButton>
+</ActionBar>
+
+<StackLayout>
+	<Label text="hello"></Label>
+</StackLayout>
+
+
+	<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>

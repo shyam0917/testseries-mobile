@@ -44,8 +44,8 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
 
 	constructor(private page: Page,
 		private routerExtensions: RouterExtensions) {
-		setCurrentOrientation("portrait", function () {
-		});
+		// setCurrentOrientation("portrait", function () {
+		// });
 	}
 
 	ngOnInit(): void {

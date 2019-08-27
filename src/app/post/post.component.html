@@ -1,11 +1,29 @@
 
 
 
-<StackLayout style="padding-left:5; padding-right:5; background-color: black;" isUserInteractionEnabled="false">
+<GridLayout  #grid [rows]="setRows">
+	<StackLayout row="0" style="padding-left: 5; padding-right: 5;">
+	<VideoPlayer
+	[src]="vr" (playbackReady)="callonReady()"
+	autoplay="true" fill="true"
+	setVolume="1" width="100%"></VideoPlayer>
+</StackLayout>
+
+	<Button *ngIf="!showFullscreen" row="1" text="Fullscreen" (tap)="setFullscreen()" class="btn btn-primary m-x-auto"></Button>
+
+	<GridLayout *ngIf="!showFullscreen" row="2" columns="*,auto" class="m-x-20">
+		<TextField col="0" fontSize="14" hint="Enter Comment Here" #comment="ngModel" [(ngModel)]="Info.comment" style="border-width: 1;border-color: black;height:70px;placeholder-font-size:10px;" class="p-0 p-l-5"></TextField>
+		<Button col="1" text="Comment" class="bg-success" color="white" (tap)="displayComment(Info)"></Button>
+	</GridLayout>
+</GridLayout>
+
+<Button *ngIf="showFullscreen" horizontalAlignment="right" verticalAlignment="top" class="btn btn-primary m-x-auto m-y-auto" text="Back" (tap)="goBack()"></Button>
+
+<!-- <StackLayout style="padding-left:5; padding-right:5; background-color: black;" isUserInteractionEnabled="false">
 	<VideoPlayer
 	[src]="vr" (playbackReady)="callonReady()"
 	autoplay="true"
 	setVolume="1" width="100%"></VideoPlayer>
-</StackLayout>
+</StackLayout> -->
 
 <ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>
