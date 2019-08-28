@@ -5,6 +5,7 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { Page } from "tns-core-modules/ui/page";
 import { CourseService } from './../services/course.service';
 import { MessageService } from './../services/message.service';
+import { AndroidApplication, AndroidActivityBackPressedEventData } from "tns-core-modules/application";
 import { filter } from "rxjs/operators";
 import * as app from "tns-core-modules/application";
 
@@ -29,9 +30,15 @@ export class DemoCoursesComponent implements OnInit {
 		private courseService: CourseService,
 		private messageService: MessageService,
 		private routerExtensions: RouterExtensions) {
+		// app.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
+	
+		// });
 		this.route.queryParams.subscribe(params => {
+			if(params.demoId){
+			console.log(params);
 			this.id=JSON.parse(params.demoId);
 			this.title=JSON.parse(params.demoName);
+		}
 		});
 	}
 
@@ -40,7 +47,7 @@ export class DemoCoursesComponent implements OnInit {
 	}
 
 	goBack(){
-		// this.routerExtensions.
+		this.routerExtensions.backToPreviousPage();
 	}
 
 	getCourseById(id){
@@ -49,14 +56,33 @@ export class DemoCoursesComponent implements OnInit {
 			this.isLoading=false;
 			if(response['data']){
 				this.courses=response['data'][0];
-        this.videoData=this.courses.Videos;
-				console.log(JSON.stringify(this.courses.Videos));
+				this.videoData=this.courses.Videos;
 			}
 		},error=>{
 			this.errorMessage=error.json().msg;
 			this.messageService.onError(this.errorMessage);
 		}
 		)
+	}
+
+	openPlayer(videoId:any){
+		console.log("Clicked");
+		let params = {
+			videoId: JSON.stringify(videoId),
+			showDemo:"true"
+		}
+		this.routerExtensions.navigate(['/post'], {
+			queryParams: params,
+		});
+	}
+
+	showPreview(){
+		let params = {
+			courseId: JSON.stringify(this.courses._id)
+		}
+		this.routerExtensions.navigate(['/preview'], {
+			queryParams: params,
+		});
 	}
 
 	

@@ -128,4 +128,14 @@ export class CourseService {
 				}));
 	}
 
+		// to get convert video into mp4
+	convertVideoMp4(id:String){
+		return this.http.get(AppConfig.API_HOST+'/api/courses/pm4/'+id,this.authorizationService.authorization()).pipe(
+			map(data=>
+				data
+				,(error:any)=>{
+					error
+				}));
+	}
+
 }

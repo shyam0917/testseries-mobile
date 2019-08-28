@@ -1,21 +1,52 @@
+<GridLayout [rows]="setRows">
+	<WebView #webView row="0" src='<html><body><iframe frameborder="0" width="100%" height="100%" src="{{videoUrl}}" allowfullscreen allow="autoplay"></iframe></body></html>'></WebView>
 
+	<Button *ngIf="showFullscreen==false" row="1" text="fullscreen  &#xf0b2;" (tap)="setFullscreen()" class="btn btn-primary m-x-auto fa"></Button>
 
-<!-- <StackLayout style="padding-left:20; padding-right:20;" isUserInteractionEnabled="false">
-			<YoutubePlayer  #player id="player" width="100%" autoplay="1" isFullScreen="true" apiKey="AIzaSyAui5qi3ZIRR53FXodz8BRPXznp9ZQZLGc" src="g-GxsJ8VNkY"
-			 ></YoutubePlayer>
-			</StackLayout> -->
-
-			<ActionBar class="action-bar">
-
-				<NavigationButton icon="res://ic_arrow_back_white_24dp" (tap)="goBack()"></NavigationButton>
-				<Label class="action-bar-title text-left" text="hii"></Label>
-			</ActionBar>
-
-			<StackLayout style="padding-left:5; padding-right:5; background-color: black;" isUserInteractionEnabled="false">
-				<VideoPlayer
-				[src]="vr" (playbackReady)="callonReady()"
-				autoplay="true"
-				setVolume="1" width="100%"></VideoPlayer>
+	<GridLayout *ngIf="showFullscreen!=true" row="2" columns="*,auto" class="m-5 m-x-20">
+		<TextField col="0" fontSize="14"  hint="  Enter Comment Here" #comment="ngModel" [(ngModel)]="Info.comment" style="border-width: 1;border-color: black;height:70px;placeholder-font-size:10px;" borderRadius="50"  class="p-5 m-x-10"></TextField>
+		<Button col="1" text="&#xf1d8;" width="11%" class="bg-success fa btn-rounded-lg" color="white" (tap)="displayComment(Info)"></Button>
+	</GridLayout>
+	<ListView *ngIf="showFullscreen!=true" row="3" [items]="course">
+		<ng-template let-course="item" let-i="index">
+			<StackLayout>
+					<GridLayout row="0" rows="auto,auto" columns="auto,*,*" class="p-5" col="0" backgroundColor="white">
+						<Image col="0" rowSpan="2" width=40 height=40 borderRadius="50" class="p-5" stretch="aspectFill"  src="res://courseimg"></Image>
+							<Label col="1" class="set-dark p-5 p-t-20 p-b-0" fontSize="16" text="{{course?.name}}"></Label>
+							<Label row="1" col="1" class="p-5 p-t-0 m-y-auto" fontSize="16" text="{{course?.message}}"></Label>
+					</GridLayout>
 			</StackLayout>
+		</ng-template>
+	</ListView>
+</GridLayout>
 
-			<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>
+<Button *ngIf="showFullscreen" horizontalAlignment="left" verticalAlignment="top" class="btn btn-primary m-x-auto m-y-auto" text="Back" (tap)="goBack()"></Button>
+
+	<!-- <WebView *ngIf="showFullscreen" src='<html><body><iframe frameborder="0" width="100%" height="100%" src="{{videoUrl}}" allowfullscreen allow="autoplay"></iframe></body></html>'></WebView>
+<Button *ngIf="showFullscreen" horizontalAlignment="left" verticalAlignment="top" class="btn btn-primary m-x-auto m-y-auto" text="Back" (tap)="goBack()"></Button>
+
+
+<GridLayout *ngIf="showFullscreen!=true" rows="276,auto,auto,*">
+	<WebView #webView row="0" src='<html><body><iframe frameborder="0" width="100%" height="100%" src="{{videoUrl}}" allowfullscreen allow="autoplay"></iframe></body></html>'></WebView>
+
+	<Button *ngIf="showFullscreen==false" row="1" text="fullscreen  &#xf0b2;" (tap)="setFullscreen()" class="btn btn-primary m-x-auto fa"></Button>
+
+	<GridLayout *ngIf="showFullscreen!=true" row="2" columns="*,auto" class="m-5 m-x-20">
+		<TextField col="0" fontSize="14"  hint="  Enter Comment Here" #comment="ngModel" [(ngModel)]="Info.comment" style="border-width: 1;border-color: black;height:70px;placeholder-font-size:10px;" borderRadius="50"  class="p-5 m-x-10"></TextField>
+		<Button col="1" text="&#xf1d8;" width="11%" class="bg-success fa btn-rounded-lg" color="white" (tap)="displayComment(Info)"></Button>
+	</GridLayout>
+	<ListView *ngIf="showFullscreen!=true" row="3" [items]="course">
+		<ng-template let-course="item" let-i="index">
+			<StackLayout>
+					<GridLayout row="0" rows="auto,auto" columns="auto,*,*" class="p-5" col="0" backgroundColor="white">
+						<Image col="0" rowSpan="2" width=40 height=40 borderRadius="50" class="p-5" stretch="aspectFill"  src="res://courseimg"></Image>
+							<Label col="1" class="set-dark p-5 p-t-20 p-b-0" fontSize="16" text="{{course?.name}}"></Label>
+							<Label row="1" col="1" class="p-5 p-t-0 m-y-auto" fontSize="16" text="{{course?.message}}"></Label>
+					</GridLayout>
+			</StackLayout>
+		</ng-template>
+	</ListView>
+</GridLayout>
+
+	<WebView *ngIf="showFullscreen" src='<html><body><iframe frameborder="0" width="100%" height="100%" src="{{videoUrl}}" allowfullscreen allow="autoplay"></iframe></body></html>'></WebView>
+<Button *ngIf="showFullscreen" horizontalAlignment="left" verticalAlignment="top" class="btn btn-primary m-x-auto m-y-auto" text="Back" (tap)="goBack()"></Button> -->

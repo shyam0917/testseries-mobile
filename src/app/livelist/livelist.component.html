@@ -1,0 +1,40 @@
+<ActionBar class="action-bar">
+	<GridLayout columns="4*,*">
+		<StackLayout col="0" class="m-y-auto">
+			<Label [text]="title" class="action-bar-custom"></Label>
+		</StackLayout>
+	</GridLayout>
+	<ActionItem icon="" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+	ios.position="left">
+</ActionItem>
+<NavigationButton ios:visibility="collapsed" icon="res://ic_arrow_back_white_24dp" (tap)="goBack()"></NavigationButton>
+</ActionBar>
+
+
+<ListView class="list-group" [items]="videoData" separatorColor="#e0e0e0">
+	<ng-template let-course="item">
+		<GridLayout rows="auto" columns="*" class="p-5 set-list" backgroundColor="#e0e0e0">
+			<GridLayout row="0" columns="auto,*" class="p-5" col="0" backgroundColor="white" (tap)="openPlayer(course?.videUrl)">
+				<Image col="0" width=80 height=55 class="p-5" stretch="aspectFill"  src="res://courseimg"></Image>
+				<StackLayout col="1">
+					<Label class="set-dark p-5 m-t-10" textWrap="true" fontSize="16" text="{{course?.title}}"></Label>
+				</StackLayout>
+			</GridLayout>     
+		</GridLayout>
+	</ng-template>
+</ListView>
+
+<!-- 		<ListView class="list-group" [items]="videoData" separatorColor="white">
+	<ng-template let-course="item">
+		<GridLayout rows="auto" columns="*" class="list-group-item active" backgroundColor="#e0e0e0">
+			<GridLayout row="0"  columns="auto,*" col="0" backgroundColor="white">
+			<Image col="0" width=50 height=50 borderRadius="50" stretch="aspectFill"  src="res://courseimg"></Image>
+				<StackLayout col="1">
+				<Label class="list-group-item-heading" fontSize="16" text="{{course?.title| slice:0:30}}"></Label>
+			</StackLayout>
+		</GridLayout>     
+				</GridLayout>
+			</ng-template>
+		</ListView> -->
+
+		<ActivityIndicator [busy]="isLoading" verticalAlignment="center" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>

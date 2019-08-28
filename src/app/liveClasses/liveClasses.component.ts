@@ -70,7 +70,6 @@ export class LiveClassesComponent implements OnInit {
 						return item;
 					}
 				})
-				console.log(JSON.stringify(this.courses));
 			}
 		},error=>{
 			this.isLoading=false;
@@ -83,6 +82,17 @@ export class LiveClassesComponent implements OnInit {
 	//To getting course details by id 
 	getCourseDetails(id:string){
 		this.courseDetails=this.courses.find(ele=>ele._id === id);
+	}
+
+	goLive(courseId,courseName){
+			let params = {
+			 courseId: JSON.stringify(courseId),
+			 courseName: JSON.stringify(courseName)
+		}
+		console.log(JSON.stringify(params));
+		this.routerExtensions.navigate(['/livelist'], {
+			queryParams: params,
+		});
 	}
 
 	showPreview(Id){

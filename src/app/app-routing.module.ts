@@ -16,7 +16,8 @@ const routes: Routes = [
 	{ path: "demo", loadChildren: "~/app/demo-courses/demoCourses.module#DemoCoursesModule" },
 	{ path: "videoClasses", loadChildren: "~/app/video-classes/videoClasses.module#VideoClassesModule" },
 	{ path: "myCourses", loadChildren: "~/app/myCourses/myCourses.module#MyCoursesModule" },
-	{ path: "liveClasses", loadChildren: "~/app/liveClasses/liveClasses.module#LiveClassesModule" }
+	{ path: "liveClasses", loadChildren: "~/app/liveClasses/liveClasses.module#LiveClassesModule" },
+	{ path: "livelist", loadChildren: "~/app/livelist/livelist.module#LiveListModule" }
 ];
 
 @NgModule({

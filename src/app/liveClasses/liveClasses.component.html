@@ -36,7 +36,7 @@
 <ListView class="list-group" [items]="courses" separatorColor="#e0e0e0">
 	<ng-template let-course="item">
 		<GridLayout rows="auto" columns="*" class="p-5 set-list" backgroundColor="#e0e0e0">
-			<GridLayout row="0" rows="auto,auto"  columns="auto,*,*" class="p-5" col="0" backgroundColor="white">
+			<GridLayout row="0" rows="auto,auto"  columns="auto,*,*" class="p-5" col="0" backgroundColor="white" (tap)="goLive(course?._id,course?.courseName)">
 				<Image col="0" rowSpan="2" width=55 height=55 borderRadius="50" class="p-5" stretch="aspectFill"  src="res://courseimg"></Image>
 				<StackLayout col="1">
 					<Label class="set-dark p-5" fontSize="16" text="{{course?.courseName| slice:0:30}}"></Label>

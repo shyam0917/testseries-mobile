@@ -10,7 +10,7 @@ import * as app from "tns-core-modules/application";
 	styleUrls: ['./playlist.component.css'],
 	moduleId: module.id,
 })
-export class PlaylistComponent implements OnInit {
+export class PlaylistComponent {
 	public courseData:[]=[];
 	public title:any=String;
 	public showPlaylist:boolean=true;
@@ -18,19 +18,15 @@ export class PlaylistComponent implements OnInit {
 	constructor(private route: ActivatedRoute,
 		private routerExtensions: RouterExtensions,
 		private router: Router) { 
-
-
 		this.route.queryParams.subscribe(params => {
+			if(params.videoData){
 			this.courseData=JSON.parse(params.videoData);
 			this.title=JSON.parse(params.title);
+		}
 		});
 
 	}
 
-	ngOnInit() {
-	console.log(JSON.stringify(this.courseData));
-
-	}
 
 	goBack(){
 		this.routerExtensions.navigate(['/myCourses'],{ clearHistory: true });
@@ -38,7 +34,8 @@ export class PlaylistComponent implements OnInit {
 
 	openPlayer(videoId:any){
 		let params = {
-			videoId: JSON.stringify(videoId)
+			videoId: JSON.stringify(videoId),
+			showDemo:"false"
 		}
 		this.routerExtensions.navigate(['/post'], {
 			queryParams: params,

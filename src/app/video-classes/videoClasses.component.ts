@@ -28,7 +28,7 @@ export class VideoClassesComponent implements OnInit {
 	successMessage: string;
 	courseDetails:any={};
 	addCourseObject:any={};
-  courseImgPath:string=new CommonConfig().Aws_URL+'courses/';
+	courseImgPath:string=new CommonConfig().Aws_URL+'courses/';
 	subSubjectName:string='';
 	newSubjectName:string='';
 	public subsubjectArray: any=[];
@@ -47,23 +47,23 @@ export class VideoClassesComponent implements OnInit {
 		this.getCoursesByFilter();
 	}
 
-	 onDrawerButtonTap(): void {
+	onDrawerButtonTap(): void {
 		const sideDrawer = <RadSideDrawer>app.getRootView();
 		sideDrawer.showDrawer();
 	}
 
-			// to get all courses from collections -
+	// to get all courses from collections -
 	getCoursesByFilter(){
 		let filter={};
 		if(this.selectedStatusArry.length){
 			filter['status']=this.selectedStatusArry.map(s=>s.id);
 		}
-		  filter['platform']="VideoCourses"
-		  filter['view']="released"
+		filter['platform']="VideoCourses"
+		filter['view']="released"
 		this.getAllCourses(filter);
 	}
 
-		//To get all Active course -
+	//To get all Active course -
 	getAllCourses(filter: any={}){
 		this.isLoading=true;
 		this.courseService.getAllCourses(filter).subscribe(response=>{
@@ -75,7 +75,6 @@ export class VideoClassesComponent implements OnInit {
 						return item;
 					}
 				})
-				console.log(JSON.stringify(this.courses));
 			}
 		},error=>{
 			this.errorMessage=error.json().msg;
@@ -84,13 +83,13 @@ export class VideoClassesComponent implements OnInit {
 		)
 	}
 
-			// getting payment from user -
+	// getting payment from user -
 	setPayment(payDetails){
 		this.isLoading=true;
 		this.courseService.getPayment(payDetails).subscribe(response=>{
 			this.isLoading=false;
 			if(response['data']){
-			let url = response['data'];
+				let url = response['data'];
 				UtilsModule.openUrl(url); 
 			}
 		},error=>{
@@ -103,19 +102,19 @@ export class VideoClassesComponent implements OnInit {
 
 	gotoDemo(demoId,demoName){
 		let params = {
-			 demoId: JSON.stringify(demoId),
-			 demoName: JSON.stringify(demoName) 
+			demoId: JSON.stringify(demoId),
+			demoName: JSON.stringify(demoName) 
 		}
 		this.routerExtensions.navigate(['/demo'], {
 			queryParams: params,
 		});
 	}
-			
+	
 
 
-		showPreview(Id){
+	showPreview(Id){
 		let params = {
-			 courseId: JSON.stringify(Id)
+			courseId: JSON.stringify(Id)
 		}
 		this.routerExtensions.navigate(['/preview'], {
 			queryParams: params,

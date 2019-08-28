@@ -15,32 +15,30 @@ import frameModule = require("ui/frame");
 	moduleId: module.id,
 	templateUrl: "./home.component.html"
 })
-export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
-	@ViewChild('webView') webView: ElementRef;
-	// 	 public player:any;
-	// public oWebViewInterface:any;
+export class HomeComponent implements OnInit,AfterViewInit {
+	// @ViewChild('webView') webView: ElementRef;
 	private drawer: RadSideDrawer;
 	public name:any;	
 
-	public showFullscreen:boolean=false;
-	public Info = {
-		comment: "",
-	};
-	public comment:any;
-	public course=[
-	{
-		name: "Shyam",
-		message: "hello"
-	},
-	{
-		name: "Shyam",
-		message: "hello"
-	},
-	{
-		name: "Shyam",
-		message: "welcome"
-	}
-	]
+	// public showFullscreen:boolean=false;
+	// public Info = {
+	// 	comment: "",
+	// };
+	// public comment:any;
+	// public course=[
+	// {
+	// 	name: "Shyam",
+	// 	message: "hello"
+	// },
+	// {
+	// 	name: "Shyam",
+	// 	message: "hello"
+	// },
+	// {
+	// 	name: "Shyam",
+	// 	message: "welcome"
+	// }
+	// ]
 
 	constructor(private page: Page,
 		private routerExtensions: RouterExtensions) {
@@ -49,7 +47,6 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.page.actionBarHidden = true;
 
 		// Init your component properties here.
 	}
@@ -61,48 +58,39 @@ export class HomeComponent implements OnInit,AfterViewInit,OnDestroy {
 			this.drawer.gesturesEnabled = true;
 			this.name="Adiya";
 		}, 100);
-		let webview: WebView = this.webView.nativeElement;
-		webview.on(WebView.loadStartedEvent, function (args: LoadEventData) {
-			webview.android.getSettings().setBuiltInZoomControls(false);
-			webview.android.getSettings().setJavaScriptEnabled(true);
-			webview.android.getSettings().setMediaPlaybackRequiresUserGesture(false);
-		});
+		// let webview: WebView = this.webView.nativeElement;
+		// webview.on(WebView.loadStartedEvent, function (args: LoadEventData) {
+		// 	webview.android.getSettings().setBuiltInZoomControls(false);
+		// 	webview.android.getSettings().setJavaScriptEnabled(true);
+		// 	webview.android.getSettings().setMediaPlaybackRequiresUserGesture(false);
+		// });
 	}
 
-	goBack(){
-		this.showFullscreen=false;
-		setCurrentOrientation("portrait", function () {
-		});
-	}
+	// goBack(){
+	// 	this.showFullscreen=false;
+	// 	setCurrentOrientation("portrait", function () {
+	// 	});
+	// }
 
-	setFullscreen(){
-		this.showFullscreen=true;
-		console.log(this.showFullscreen);
-		setCurrentOrientation("landscape", function () {
-		});
-	}
+	// setFullscreen(){
+	// 	this.showFullscreen=true;
+	// 	console.log(this.showFullscreen);
+	// 	setCurrentOrientation("landscape", function () {
+	// 	});
+	// }
 
-	displayComment(com:any){
-		console.log(com.comment);
-	}
+	// displayComment(com:any){
+	// 	console.log(com.comment);
+	// }
 
-	ngOnDestroy() {
-	orientationCleanup();
-	}
+	// ngOnDestroy() {
+	// orientationCleanup();
+	// }
 
 	onDrawerButtonTap(): void {
 		const sideDrawer = <RadSideDrawer>app.getRootView();
 		sideDrawer.showDrawer();
 	}
 
-	// play(){
-		//  this.oWebViewInterface.callJSFunction('playVideo');
-		// }
-
-		// setupWebViewInterface(){
-			// 	    let webView: WebView = this.webView.nativeElement;
-
-			//    this.oWebViewInterface = new webViewInterfaceModule.WebViewInterface(webView, this.webViewSrc);
-			// }
 
 		}

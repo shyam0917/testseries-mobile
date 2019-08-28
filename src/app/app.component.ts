@@ -27,7 +27,7 @@ export class AppComponent implements OnInit,OnDestroy {
 	public name:any;
 	public connectionType: string;
 	public dashboardImage:any;
-profileImgPath:string=new CommonConfig().Aws_URL+'profiles/';
+	profileImgPath:string=new CommonConfig().Aws_URL+'profiles/';
 
 	constructor(private router: Router,
 		private activeRoute: ActivatedRoute,
@@ -48,9 +48,9 @@ profileImgPath:string=new CommonConfig().Aws_URL+'profiles/';
 
 	ngOnInit(): void {
 		this._activatedUrl = "/home";
-				this.getUserDetail();
+		this.getUserDetail();
 		this._sideDrawerTransition = new SlideInOnTopTransition();
-     
+		
 		this.router.events
 		.pipe(filter((event: any) => event instanceof NavigationEnd))
 		.subscribe((event: NavigationEnd) => this._activatedUrl = event.urlAfterRedirects);
@@ -83,15 +83,16 @@ profileImgPath:string=new CommonConfig().Aws_URL+'profiles/';
 	}
 
 	ngAfterViewInit() {
-    this.cdr.detectChanges();
-    		this.profileService.updateProfile.subscribe((profileData)=>{
-    		this.name=profileData.name;
+		this.cdr.detectChanges();
+		this.profileService.updateProfile.subscribe((profileData)=>{
+			this.name=profileData.name;
+			console.log(JSON.stringify(profileData));
 			if(profileData.icon){
 				this.dashboardImage=profileData.icon;
 				console.log(JSON.stringify(profileData));
- }
-})
-}
+			}
+		})
+	}
 
 	get sideDrawerTransition(): DrawerTransitionBase {
 		return this._sideDrawerTransition;
@@ -137,7 +138,7 @@ profileImgPath:string=new CommonConfig().Aws_URL+'profiles/';
 
 	// on shre click
 	onShareTap(){
-SocialShare.shareUrl("https://www.testseries.org/", "Awesome app for exam preparations");
+		SocialShare.shareUrl("https://www.testseries.org/", "Awesome app for exam preparations");
 	}
 
 	onLogout(){
@@ -147,10 +148,10 @@ SocialShare.shareUrl("https://www.testseries.org/", "Awesome app for exam prepar
 	}
 
 	onCallTap(){
-		   const phoneNumber = '8826612940';
-   TNSPhone.requestCallPermission('You should accept the permission to be able to make a direct phone call.')
-      .then(() => TNSPhone.dial(phoneNumber, false))
-      .catch(() => TNSPhone.dial(phoneNumber, true));
+		const phoneNumber = '8826612940';
+		TNSPhone.requestCallPermission('You should accept the permission to be able to make a direct phone call.')
+		.then(() => TNSPhone.dial(phoneNumber, false))
+		.catch(() => TNSPhone.dial(phoneNumber, true));
 	}
 
 
