@@ -9,11 +9,11 @@
 	setVolume="1" width="100%"></VideoPlayer>
 </StackLayout>
 
-	<Button *ngIf="!showFullscreen && !showDemo" row="1" text="Fullscreen" (tap)="setFullscreen()" class="btn btn-primary m-x-auto"></Button>
+	<Button *ngIf="!showFullscreen && !showDemo" row="1" text="Fullscreen  &#xf0b2;" (tap)="setFullscreen()" class="btn btn-primary m-x-auto fa"></Button>
 
 	<GridLayout *ngIf="!showFullscreen && !showDemo" row="2" columns="*,auto" class="m-x-20">
-		<TextField col="0" fontSize="14" hint="Enter Comment Here" #comment="ngModel" [(ngModel)]="Info.comment" style="border-width: 1;border-color: black;height:70px;placeholder-font-size:10px;" class="p-0 p-l-5"></TextField>
-		<Button col="1" text="Comment" class="bg-success" color="white" (tap)="displayComment(Info)"></Button>
+		<TextField col="0" fontSize="14" hint="Enter Comment Here" #comment="ngModel" [(ngModel)]="Info.comment" borderRadius="50" class="p-5 m-x-10 set-comment"></TextField>
+		<Button col="1" text="&#xf1d8;" width="11%" class="bg-success fa btn-rounded-lg" color="white" (tap)="displayComment(Info)"></Button>
 	</GridLayout>
 </GridLayout>
 

@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { MessageConfig } from './../config/message-config.constants';
 import { CommonConfig } from './../config/common-config.constants';
 import { AuthenticationService } from './../services/authentication.service';
 import { RouterExtensions } from "nativescript-angular/router";
+import { getRootView } from "tns-core-modules/application";
 import { MessageService } from './../services/message.service';
 import { CourseService } from './../services/course.service';
 import * as UtilsModule from "tns-core-modules/utils/utils";
@@ -14,7 +15,8 @@ import * as app from "tns-core-modules/application";
 	moduleId: module.id,
 	templateUrl: "./videoClasses.component.html"
 })
-export class VideoClassesComponent implements OnInit {
+export class VideoClassesComponent implements OnInit,AfterViewInit {
+	private drawer: RadSideDrawer;
 	public role: string="";
 	selectedStatus:any=[];
 	contentStatus: any=[];
@@ -45,6 +47,13 @@ export class VideoClassesComponent implements OnInit {
 		this.contentStatus=CommonConfig.STATUS_CONTENT.slice(0,3).map(s=> {return {id: s,itemName: s}})
 		this.selectedStatusArry=[this.contentStatus[0]];
 		this.getCoursesByFilter();
+	}
+
+		ngAfterViewInit() {
+		setTimeout(() => {
+			this.drawer = <RadSideDrawer>getRootView();
+			this.drawer.gesturesEnabled = true;
+		}, 100);
 	}
 
 	onDrawerButtonTap(): void {

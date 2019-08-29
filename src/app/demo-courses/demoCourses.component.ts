@@ -7,6 +7,7 @@ import { CourseService } from './../services/course.service';
 import { MessageService } from './../services/message.service';
 import { AndroidApplication, AndroidActivityBackPressedEventData } from "tns-core-modules/application";
 import { filter } from "rxjs/operators";
+import * as UtilsModule from "tns-core-modules/utils/utils";
 import * as app from "tns-core-modules/application";
 
 @Component({
@@ -22,6 +23,7 @@ export class DemoCoursesComponent implements OnInit {
 	isLoading:boolean=false;
 	public courses:any={};
 	public videoData:any=[];
+	public mappedData=[];
 	errorMessage:string="";
 
 	constructor(
@@ -35,7 +37,6 @@ export class DemoCoursesComponent implements OnInit {
 		// });
 		this.route.queryParams.subscribe(params => {
 			if(params.demoId){
-			console.log(params);
 			this.id=JSON.parse(params.demoId);
 			this.title=JSON.parse(params.demoName);
 		}
@@ -57,6 +58,7 @@ export class DemoCoursesComponent implements OnInit {
 			if(response['data']){
 				this.courses=response['data'][0];
 				this.videoData=this.courses.Videos;
+				this.mappedData=this.videoData.filter(course=>course['videoType']=='demo');
 			}
 		},error=>{
 			this.errorMessage=error.json().msg;
@@ -66,7 +68,6 @@ export class DemoCoursesComponent implements OnInit {
 	}
 
 	openPlayer(videoId:any){
-		console.log("Clicked");
 		let params = {
 			videoId: JSON.stringify(videoId),
 			showDemo:"true"
@@ -74,6 +75,22 @@ export class DemoCoursesComponent implements OnInit {
 		this.routerExtensions.navigate(['/post'], {
 			queryParams: params,
 		});
+	}
+
+	buyCourse(){
+		this.isLoading=true;
+		this.courseService.getPayment(this.courses).subscribe(response=>{
+			this.isLoading=false;
+			if(response['data']){
+				let url = response['data'];
+				UtilsModule.openUrl(url); 
+			}
+		},error=>{
+			this.errorMessage=error.error.msg;
+			this.isLoading=false;
+			this.messageService.onErrorMessage(this.errorMessage);
+		}
+		)
 	}
 
 	showPreview(){

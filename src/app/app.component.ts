@@ -39,7 +39,7 @@ export class AppComponent implements OnInit,OnDestroy {
 		private profileService: ProfileService,
 		private studentService: StudentService) {
 		if (localStorage.getItem('currentUser')) {
-			this.router.navigate(['/home']);
+			this.router.navigate(['/videoClasses']);
 		} else {
 			this.router.navigate(['/login']);
 		}
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit,OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this._activatedUrl = "/home";
+		this._activatedUrl = "/videoClasses";
 		this.getUserDetail();
 		this._sideDrawerTransition = new SlideInOnTopTransition();
 		

@@ -23,7 +23,7 @@ export class VideoPlayerComponent implements OnInit,AfterViewInit,OnDestroy {
 	public videoId:string;
 	public videoUrl:any;
 	public errorMessage:string="";
-	@ViewChild('webView') webView: ElementRef;
+	// @ViewChild('webView') webView: ElementRef;
 	public name:any;	
 	public setRows="276,auto,auto,*";
 	public showFullscreen:boolean=false;
@@ -56,52 +56,77 @@ export class VideoPlayerComponent implements OnInit,AfterViewInit,OnDestroy {
 	}
 
 	ngOnInit() {
+		console.log(this.showFullscreen);
 		this.page.actionBarHidden = true;
-		this.videoUrl="https://www.dailymotion.com/embed/video/"+this.videoId+"?queue-enable=false&&sharing-enable=false&&autoplay=1&&ui-logo=false";
-		console.log(this.videoUrl);
+		// this.videoUrl="https://www.dailymotion.com/embed/video/"+this.videoId+"?queue-enable=false&&sharing-enable=false&&autoplay=1&&ui-logo=false";
+		// console.log(this.videoUrl);
+		// this.isLoading=true;
 		setCurrentOrientation("portrait", function () {
 		});
 		app.android.startActivity.getWindow().setFlags(
 			android.view.WindowManager.LayoutParams.FLAG_SECURE,
 			android.view.WindowManager.LayoutParams.FLAG_SECURE
 			);
+
 	}
+
+	  // public onLoadStarted(args: LoadEventData) {
+   //      let message;
+   //      if (!args.error) {
+   //          message = "WebView started loading of " + args.url;
+   //      } else {
+   //          message = "Error loading " + args.url + ": " + args.error;
+   //      }
+   //      console.log(message);
+   //  }
+   //  public onLoadFinished(args: LoadEventData) {
+   //      let message;
+   //      if (!args.error) {
+   //          message = "WebView finished loading of " + args.url;
+   //      } else {
+   //          message = "Error loading " + args.url + ": " + args.error;
+   //      }
+   //      console.log(message);
+   //  }
+
+
 
 	ngAfterViewInit() {
 		// use setTimeout otherwise there is no getRootView valid reference
-		let webview: WebView = this.webView.nativeElement;
-		webview.on(WebView.loadStartedEvent, function (args: LoadEventData) {
-			webview.android.getSettings().setBuiltInZoomControls(false);
-			webview.android.getSettings().setJavaScriptEnabled(true);
-			webview.android.getSettings().setMediaPlaybackRequiresUserGesture(false);
-		});
+		// let webview: WebView = this.webView.nativeElement;
+		// webview.on(WebView.loadStartedEvent, function (args: LoadEventData) {
+			// 	webview.android.getSettings().setBuiltInZoomControls(false);
+			// 	webview.android.getSettings().setJavaScriptEnabled(true);
+			// 	webview.android.getSettings().setMediaPlaybackRequiresUserGesture(false);
+			// 	this.isLoading=false;
+			// });
+		}
+
+		goBack(){
+			this.showFullscreen=false;
+			this.setRows="276,auto,auto,*";
+			setCurrentOrientation("portrait", function () {
+			});
+		}
+
+		setFullscreen(){
+			this.showFullscreen=true;
+			let height = Math.floor(screen.mainScreen.widthPixels*9/16);
+			this.setRows=height + ",auto,auto,auto";
+			console.log(this.setRows);
+			setCurrentOrientation("landscape", function () {
+			});
+		}
+
+		displayComment(com:any){
+			console.log(com.comment);
+		}
+
+
+
+		ngOnDestroy() {
+			orientationCleanup();
+		}
+
+
 	}
-
-	goBack(){
-		this.showFullscreen=false;
-		this.setRows="276,auto,auto,*";
-		setCurrentOrientation("portrait", function () {
-		});
-	}
-
-	setFullscreen(){
-		this.showFullscreen=true;
-		let height = Math.floor(screen.mainScreen.widthPixels*9/16);
-		this.setRows=height + ",auto,auto,auto";
-		console.log(this.setRows);
-		setCurrentOrientation("landscape", function () {
-		});
-	}
-
-	displayComment(com:any){
-		console.log(com.comment);
-	}
-
-
-
-	ngOnDestroy() {
-		orientationCleanup();
-	}
-
-
-}

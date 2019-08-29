@@ -11,10 +11,10 @@
 </ActionBar>
 
 <GridLayout rows="auto,auto">
-<ListView row="0" height="70%" class="list-group" [items]="videoData" separatorColor="#e0e0e0">
+<ListView row="0" height="70%" class="list-group" [items]="mappedData" separatorColor="#e0e0e0">
 	<ng-template let-course="item">
 		<GridLayout rows="auto" columns="*" class="p-5 set-list" backgroundColor="#e0e0e0">
-			<GridLayout row="0" *ngIf="course?.videoType=='demo'" columns="auto,*" class="p-5" col="0" backgroundColor="white" (tap)="openPlayer(course?.videUrl)">
+			<GridLayout row="0" columns="auto,*" class="p-5" col="0" backgroundColor="white" (tap)="openPlayer(course?.videUrl)">
 				<Image col="0" width=80 height=55 class="p-5" stretch="aspectFill"  src="res://courseimg"></Image>
 				<StackLayout col="1">
 					<Label class="set-dark p-5" textWrap="true" fontSize="16" text="{{course?.title}}"></Label>
@@ -28,7 +28,7 @@
 </ListView>
 
 <GridLayout row="1" columns="*,*">
-<Button col="0" text="Buy" class="btn btn-primary btn-active btn-rounded-lg"></Button>
+<Button col="0" text="Buy" class="btn btn-primary btn-active btn-rounded-lg" (tap)="buyCourse()"></Button>
 <Button col="1" text="Preview" (tap)="showPreview()" class="btn btn-primary btn-active btn-rounded-lg"></Button>
 </GridLayout>
 </GridLayout>

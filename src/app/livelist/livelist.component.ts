@@ -65,9 +65,13 @@ export class LiveListComponent implements OnInit {
 		let params = {
 			 videoId: JSON.stringify(videoId)
 		}
-		this.routerExtensions.navigate(['/videoPlayer'], {
+		this.routerExtensions.navigate(['/player'], {
 			queryParams: params,
 		});
+
+		// this.routerExtensions.navigate(['/videoPlayer'], {
+		// 	queryParams: params,
+		// });
 	}
 
 

@@ -50,13 +50,13 @@ export class LoginComponent implements OnInit,AfterViewInit {
 		this.page.actionBarHidden = true;
 	}
 
-    ngAfterViewInit() {
-        // use setTimeout otherwise there is no getRootView valid reference
-        setTimeout(() => {
-            this.drawer = <RadSideDrawer>getRootView();
-            this.drawer.gesturesEnabled = false;
-        }, 100);
-    }
+	ngAfterViewInit() {
+		// use setTimeout otherwise there is no getRootView valid reference
+		setTimeout(() => {
+			this.drawer = <RadSideDrawer>getRootView();
+			this.drawer.gesturesEnabled = false;
+		}, 100);
+	}
 
 
 	onFocus(args: any,labelObj) {
@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit,AfterViewInit {
 		this.loginService.login(authObj).subscribe((res:any) => {
 			console.log(JSON.stringify(res));
 			this.isLoading=false;
-			this.routerExtensions.navigate(['/home']);
+			this.routerExtensions.navigate(['/videoClasses']);
 
 		}, error=> {
 			this.isLoading=false;

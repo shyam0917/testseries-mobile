@@ -235,7 +235,7 @@ let userInfo={
 	
 
 	goBack(){
-		this.routerExtensions.navigate(['/home'],{ clearHistory: true });
+		this.routerExtensions.navigate(['/videoClasses'],{ clearHistory: true });
 	}
 
 	// Get user detail on basis of userId
