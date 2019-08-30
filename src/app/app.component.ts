@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ViewChild, NgZone, OnDestroy, ChangeDetectorRef, OnChanges } from "@angular/core";
 import * as Connectivity from "tns-core-modules/connectivity";
 import { NavigationEnd, Router, ActivatedRoute } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -21,7 +21,7 @@ import * as app from "tns-core-modules/application";
 })
 
 
-export class AppComponent implements OnInit,OnDestroy {
+export class AppComponent implements OnInit,OnDestroy,OnChanges {
 	private _activatedUrl: string;
 	private _sideDrawerTransition: DrawerTransitionBase;
 	public name:any;
@@ -69,6 +69,18 @@ export class AppComponent implements OnInit,OnDestroy {
 		});
 	}
 
+
+	ngOnChanges(){
+		this.profileService.updateProfile.subscribe((profileData)=>{
+			this.name=profileData.name;
+			console.log(JSON.stringify(profileData));
+			if(profileData.icon){
+				this.dashboardImage=profileData.icon;
+				console.log(JSON.stringify(profileData));
+			}
+		})	
+	}
+
 	public connectionToString(connectionType: number): string {
 		switch (connectionType) {
 			case Connectivity.connectionType.none:
@@ -83,6 +95,7 @@ export class AppComponent implements OnInit,OnDestroy {
 	}
 
 	ngAfterViewInit() {
+		console.log("hii");
 		this.cdr.detectChanges();
 		this.profileService.updateProfile.subscribe((profileData)=>{
 			this.name=profileData.name;

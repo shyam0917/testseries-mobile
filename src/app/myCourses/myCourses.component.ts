@@ -72,11 +72,11 @@ export class MyCoursesComponent implements OnInit {
 						this.isLoading=false;
 						if(response['data']){
 							 this.courses=response['data'];
-							 console.log(JSON.stringify(this.courses));
 							this.dataArr=response['data'];
 							this.totalItems=response['data'].length;
 						}
 					},error=>{
+			this.isLoading=false;
 			this.errorMessage=error.error.msg;
 			this.messageService.onErrorMessage(this.errorMessage);
 					}

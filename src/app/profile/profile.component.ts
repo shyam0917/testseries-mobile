@@ -1,9 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild} from "@angular/core";
+import { Component, OnInit, AfterViewInit,  ElementRef, ViewChild} from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { TabView } from "tns-core-modules/ui/tab-view";
 import { ValidationConfig } from "../config/validation-config.constants";
 import { TextField } from 'ui/text-field'; 
+import { getRootView } from "tns-core-modules/application";
 import { ImageCropper } from "nativescript-imagecropper";
 import { StudentService } from '../services/student.service';
 import { MessageService } from '../services/message.service';
@@ -21,7 +22,7 @@ import frameModule = require("ui/frame");
 	moduleId: module.id,
 	templateUrl: "./profile.component.html"
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit,AfterViewInit {
 	public passwordInfo={
 		oldPassword:'',
 		newPassword:'',
@@ -46,6 +47,7 @@ export class ProfileComponent implements OnInit {
 	public showPassword:boolean=false;
 	public newPass:string="";
 	public confirmPass:string="";
+	private drawer: RadSideDrawer;
 	public matchpass:boolean=false;
 	public showButton:boolean=false;
 	profileImgPath:string=new CommonConfig().Aws_URL+'profiles/';
@@ -65,6 +67,13 @@ export class ProfileComponent implements OnInit {
 		this.getUserDetail();
 	}
 
+	ngAfterViewInit(){
+				setTimeout(() => {
+			this.drawer = <RadSideDrawer>getRootView();
+			this.drawer.gesturesEnabled = false;
+		}, 100);
+	}
+
 
 	// switch to password screen
 	changePassword(){
@@ -77,7 +86,6 @@ export class ProfileComponent implements OnInit {
 			email:personalInfo.email,
 			mobile:personalInfo.mobile
 		}
-          console.log(JSON.stringify(userInfo));
 		this.errorMessage="";
 		this.successMessage="";
 		this.isLoading=true;
@@ -128,7 +136,7 @@ startSelection(context){
 						var sizeInKb=sizeInBytes/1000;
 	
 						if(sizeInKb>AppConfig.PROFILE_IMAGE_SIZE[1]){
-							console.log("File Size is too large");
+							this.messageService.onErrorMessage("File Size is too large");
 						}else{
 							this.uploadprofileImage(this.image);
 						}	
@@ -214,7 +222,6 @@ let userInfo={
 	onPasswordSubmit(passwordInfo:any){
 		this.isLoading=true;
 		this.studentService.changePassword(passwordInfo).subscribe(response=>{
-			console.log(JSON.stringify(response['data']));
 			if(response['success']){
 				this.isLoading=false;
 				this.passwordInfo={
@@ -227,7 +234,6 @@ let userInfo={
 		},error=>{
 			this.isLoading=false;
 			this.errorMessage=error.error.msg;
-			console.log(JSON.stringify(error));
 			this.messageService.onErrorMessage(this.errorMessage);
 		}
 		)

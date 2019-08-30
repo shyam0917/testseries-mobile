@@ -21,6 +21,6 @@
 	</ListView>
 </GridLayout>
 
-<Button *ngIf="showFullscreen" horizontalAlignment="left" verticalAlignment="top" class="btn btn-primary m-x-auto m-y-auto" text="Back" (tap)="goBack()"></Button>
+<Label *ngIf="showFullscreen" horizontalAlignment="right" backgroundColor="red" verticalAlignment="bottom" text="&#xf066;"  class="fa p-5" color="white" fontSize="22" (tap)="goBack()"></Label>
 
 <ActivityIndicator [busy]="isLoading" class="m-y-30" verticalAlignment="top" [visibility]="isLoading ? 'visible' : 'collapse'"></ActivityIndicator>

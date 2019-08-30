@@ -58,7 +58,6 @@ export class UserPostComponent implements OnInit {
 	//To get all Active post -
 	getAllPosts(filter: any){
 		this.isLoading=true;
-		console.log(filter);
 		this.studentService.getAllPosts(filter).subscribe(response=>{
 			this.isLoading=false;
 			if(response['data']){
@@ -69,11 +68,11 @@ export class UserPostComponent implements OnInit {
 					}
 				})
 
-				console.log(JSON.stringify(this.posts));
 			}
 		},error=>{
-			this.errorMessage=error.msg;
-			this.messageService.onError(this.errorMessage);
+			this.isLoading=false;
+			this.errorMessage=error.error.msg;
+			this.messageService.onErrorMessage(this.errorMessage);
 		}
 		)
 	}

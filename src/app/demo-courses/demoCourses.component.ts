@@ -33,74 +33,75 @@ export class DemoCoursesComponent implements OnInit {
 		private messageService: MessageService,
 		private routerExtensions: RouterExtensions) {
 		// app.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
-	
-		// });
-		this.route.queryParams.subscribe(params => {
-			if(params.demoId){
-			this.id=JSON.parse(params.demoId);
-			this.title=JSON.parse(params.demoName);
+
+			// });
+			this.route.queryParams.subscribe(params => {
+				if(params.demoId){
+					this.id=JSON.parse(params.demoId);
+					this.title=JSON.parse(params.demoName);
+				}
+			});
 		}
-		});
-	}
 
-	ngOnInit() {
-		this.getCourseById(this.id);
-	}
+		ngOnInit() {
+			this.getCourseById(this.id);
+		}
 
-	goBack(){
-		this.routerExtensions.backToPreviousPage();
-	}
+		goBack(){
+			this.routerExtensions.backToPreviousPage();
+		}
 
-	getCourseById(id){
-		this.isLoading=true;
-		this.courseService.getCoursesById(id).subscribe(response=>{
-			this.isLoading=false;
-			if(response['data']){
-				this.courses=response['data'][0];
-				this.videoData=this.courses.Videos;
-				this.mappedData=this.videoData.filter(course=>course['videoType']=='demo');
+		getCourseById(id){
+			this.isLoading=true;
+			this.courseService.getCoursesById(id).subscribe(response=>{
+				if(response['data']){
+					this.isLoading=false;
+					this.courses=response['data'][0];
+					this.videoData=this.courses.Videos;
+					this.mappedData=this.videoData.filter(course=>course['videoType']=='demo');
+				}
+			},error=>{
+				this.isLoading=false;
+				this.errorMessage=error.json().msg;
+				this.messageService.onError(this.errorMessage);
 			}
-		},error=>{
-			this.errorMessage=error.json().msg;
-			this.messageService.onError(this.errorMessage);
+			)
 		}
-		)
-	}
 
-	openPlayer(videoId:any){
-		let params = {
-			videoId: JSON.stringify(videoId),
-			showDemo:"true"
-		}
-		this.routerExtensions.navigate(['/post'], {
-			queryParams: params,
-		});
-	}
-
-	buyCourse(){
-		this.isLoading=true;
-		this.courseService.getPayment(this.courses).subscribe(response=>{
-			this.isLoading=false;
-			if(response['data']){
-				let url = response['data'];
-				UtilsModule.openUrl(url); 
+		openPlayer(videoId:any){
+			let params = {
+				videoId: JSON.stringify(videoId),
+				showDemo:"true"
 			}
-		},error=>{
-			this.errorMessage=error.error.msg;
-			this.isLoading=false;
-			this.messageService.onErrorMessage(this.errorMessage);
+			this.routerExtensions.navigate(['/post'], {
+				queryParams: params,
+			});
 		}
-		)
-	}
 
-	showPreview(){
-		let params = {
-			courseId: JSON.stringify(this.courses._id)
+		buyCourse(){
+			this.isLoading=true;
+			this.courseService.getPayment(this.courses).subscribe(response=>{
+				this.isLoading=false;
+				if(response['data']){
+					let url = response['data'];
+					UtilsModule.openUrl(url); 
+				}
+			},error=>{
+				this.errorMessage=error.error.msg;
+				this.isLoading=false;
+				this.messageService.onErrorMessage(this.errorMessage);
+			}
+			)
 		}
-		this.routerExtensions.navigate(['/preview'], {
-			queryParams: params,
-		});
-	}
 
-	
-}
+		showPreview(){
+			let params = {
+				courseId: JSON.stringify(this.courses._id)
+			}
+			this.routerExtensions.navigate(['/preview'], {
+				queryParams: params,
+			});
+		}
+
+
+	}

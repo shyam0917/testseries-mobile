@@ -25,12 +25,11 @@ export class PlaylistComponent implements OnInit {
 				this.title=JSON.parse(params.title);
 			}
 		});
-// *ngIf="course?.videoType=='demo'"
+
 	}
 
 	ngOnInit(){
 	this.mappedData=this.courseData.filter(course=>course['videoType']=='paid')
-	console.log(JSON.stringify(this.mappedData));
 	}
 
 

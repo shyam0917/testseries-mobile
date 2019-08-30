@@ -55,6 +55,7 @@ export class LiveListComponent implements OnInit {
 				this.videoData=this.courses.Videos;
 			}
 		},error=>{
+			this.isLoading=false;
 			this.errorMessage=error.json().msg;
 			this.messageService.onError(this.errorMessage);
 		}
