@@ -21,42 +21,61 @@
 
 		<GridLayout rows="auto,auto" row="1" columns="auto,auto" backgroundColor="#48dbfb" class="m-x-20 m-y-10 p-5">
 			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 m-y-5 font-weight-bold" text="&#xf073;"></Label>
-			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Batch Starting"></Label>      
+			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Start Date"></Label>      
 			<Label row="1" col="1" class="p-l-5" fontSize="16" [text]="previewData?.batchStarting"></Label> 
 		</GridLayout>
 
 		<GridLayout rows="auto,auto" row="2" columns="auto,auto" backgroundColor="#48dbfb" class="m-x-20 m-y-10 p-5">
 			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 m-y-5 font-weight-bold" text="&#xf017;"></Label>
-			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Batch Timing"></Label>      
+			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Timing"></Label>      
 			<Label row="1" col="1" class="p-l-5" fontSize="16" [text]="previewData?.batchTiming"></Label> 
 		</GridLayout>
 
 		<GridLayout rows="auto,auto" row="3" columns="auto,auto" backgroundColor="#48dbfb" class="m-x-20 m-y-10 p-5">
-			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 m-y-5 font-weight-bold" text="&#xf156;"></Label>
+			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 m-y-5 font-weight-bold" text="&#xf252;"></Label>
 			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Course Duration"></Label>      
 			<Label row="1" col="1" class="p-l-5" fontSize="16" [text]="previewData?.courseDuration"></Label> 
 		</GridLayout>
 
 		<GridLayout rows="auto,auto" row="4" columns="auto,auto" backgroundColor="#48dbfb" class="m-x-20 m-y-10 p-5">
-			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 m-y-5" text="&#xf156;"></Label>
-			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Description"></Label>      
-			<Label row="1" col="1" class="p-l-5" width="89%" textWrap="true" fontSize="16" [text]="previewData?.description"></Label> 
-		</GridLayout>
-
-		<GridLayout rows="auto,auto" row="5" columns="auto,auto" backgroundColor="#48dbfb" class="m-x-20 m-y-10 p-5">
-			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 font-weight-bold m-y-5" text="&#xf19d;"></Label>
+			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 font-weight-bold m-y-5" text="&#xf007;"></Label>
 			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Teacher Name"></Label>      
 			<Label row="1" col="1" class="p-l-5 p-t-0" fontSize="16" [text]="previewData?.teacherName"></Label> 
 		</GridLayout>
 
+		<GridLayout rows="auto,auto" row="5" columns="auto,auto" backgroundColor="#48dbfb" class="m-x-20 m-y-10 p-5">
+			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 m-y-5" text="&#xf15c;"></Label>
+			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Description"></Label>      
+			<Label row="1" col="1" class="p-l-5" width="89%" textWrap="true" fontSize="16" [text]="previewData?.description"></Label> 
+		</GridLayout>
+
 		<GridLayout rows="auto,auto" row="6" columns="auto,auto" backgroundColor="#48dbfb" class="m-x-20 m-y-10 p-5">
 			<Label row="0" col="0" rowSpan="2" fontSize="18" class="fa p-5 font-weight-bold m-y-5" text="&#xf19d;"></Label>
-			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Subjects"></Label>  
+			<Label row="0" col="1" class="p-5 font-weight-bold" fontSize="18" text="Curriculum"></Label>  
 			<ListView row="1" col="1" [items]="previewData?.subjects">
 				<ng-template let-preitem="item">
 					<GridLayout rows="auto,auto">
-						<GridLayout columns="auto,3*">
-							<Label class="fa label font-weight-bold m-y-auto p-10 p-t-5" color="#46b8da" col="0" [text]="preitem.visible ? '&#xf068;' : '&#xf067;'"
+						<StackLayout>
+							<Label class="fa label font-weight-bold m-y-auto p-5 p-t-5" text="{{preitem.visible ? '&#xf068;' : '&#xf067;'}} {{preitem?.subjectName}}"
+							(tap)="toggle(preitem)"></Label>
+			<!-- 				<StackLayout (tap)="toggle(preitem)">
+							<Label col="1" [text]="preitem?.subjectName" class="label font-weight-bold m-y-auto p-t-5 p-b-5 p-r-5 "></Label>
+						</StackLayout> -->
+						</StackLayout>
+						<StackLayout row="1" [visibility]="preitem.visible ? 'visible' : 'collapse'">
+							<GridLayout class="p-l-25" *ngFor="let otherItem of preitem.subSubject">
+								<Label class="fa p-5 m-y-auto label" text="&#xf054; {{otherItem?.subSubjectName}}"></Label>
+							</GridLayout>
+						</StackLayout>
+					</GridLayout>
+				</ng-template>
+			</ListView> 
+
+			<!-- <ListView row="1" col="1" [items]="previewData?.subjects">
+				<ng-template let-preitem="item">
+					<GridLayout rows="auto,auto">
+						<GridLayout columns="*,*">
+							<Label class="fa label font-weight-bold m-y-auto p-5 p-t-5" color="black" col="0" [text]="preitem.visible ? '&#xf068;' : '&#xf067;'"
 							(tap)="toggle(preitem)"></Label>
 							<StackLayout (tap)="toggle(preitem)">
 							<Label col="1" [text]="preitem?.subjectName" class="label font-weight-bold m-y-auto p-t-5 p-b-5 p-r-5 "></Label>
@@ -69,9 +88,7 @@
 						</StackLayout>
 					</GridLayout>
 				</ng-template>
-			</ListView> 
-
-			<!-- 	<Label row="1" col="1" class="p-l-5 p-t-0" fontSize="16" [text]="previewData?.teacherName"></Label> --> 
+			</ListView> -->
 		</GridLayout>
 
 	</GridLayout>

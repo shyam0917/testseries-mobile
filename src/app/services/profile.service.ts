@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { AuthorizationService } from './authorization.service';
-
+import {Subject} from 'rxjs';
 import { AppConfig } from './../config/app-config.constants';
 import { Router } from '@angular/router';
 import { map } from "rxjs/operators";
@@ -15,7 +15,7 @@ import { map } from "rxjs/operators";
 export class ProfileService {
 
 public updateProfile: EventEmitter<any> = new EventEmitter();
-	
+chatMessageAdded = new Subject();	
 	constructor(
 	private http: HttpClient,
 	private authorizationService : AuthorizationService) { }

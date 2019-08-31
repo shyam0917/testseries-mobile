@@ -92,6 +92,7 @@ export class ProfileComponent implements OnInit,AfterViewInit {
 		this.studentService.updateBasicInfo(userInfo).subscribe(response=>{
 			if(response['success']) {
 				this.isLoading=false;
+				this.getUserDetail();
 				this.messageService.onSuccess(response['msg']);
 			}
 		}, error=>{
@@ -171,7 +172,6 @@ let userInfo={
 			}
 		}, error=>{
 			this.isLoading=false;
-			console.log(JSON.stringify(error));
 			this.errorMessage=error.error.msg;
 			this.messageService.onErrorMessage(this.errorMessage);
 		});  
@@ -250,9 +250,7 @@ let userInfo={
 			if(response['data']){
 				this.userData=response['data'];
 				this.personalInfo=this.userData;
-				if(this.userData['icon']){
-					this.profileService.updateProfile.emit(this.userData);
-				}
+				this.profileService.updateProfile.emit(this.userData);
 			}
 
 			if(response['data']['addressInfo']){

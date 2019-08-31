@@ -35,6 +35,7 @@ export class PreviewComponent implements OnInit {
 			if(res['data']){
 				this.isLoading=false;
 				this.previewData=res['data'][0];
+				console.log(JSON.stringify(this.previewData.subjects));
 			}
 		},err=>{
 			this.isLoading=false;

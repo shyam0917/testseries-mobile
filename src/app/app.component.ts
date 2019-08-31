@@ -21,7 +21,7 @@ import * as app from "tns-core-modules/application";
 })
 
 
-export class AppComponent implements OnInit,OnDestroy,OnChanges {
+export class AppComponent implements OnInit,OnDestroy{
 	private _activatedUrl: string;
 	private _sideDrawerTransition: DrawerTransitionBase;
 	public name:any;
@@ -70,16 +70,6 @@ export class AppComponent implements OnInit,OnDestroy,OnChanges {
 	}
 
 
-	ngOnChanges(){
-		this.profileService.updateProfile.subscribe((profileData)=>{
-			this.name=profileData.name;
-			console.log(JSON.stringify(profileData));
-			if(profileData.icon){
-				this.dashboardImage=profileData.icon;
-				console.log(JSON.stringify(profileData));
-			}
-		})	
-	}
 
 	public connectionToString(connectionType: number): string {
 		switch (connectionType) {
@@ -95,14 +85,10 @@ export class AppComponent implements OnInit,OnDestroy,OnChanges {
 	}
 
 	ngAfterViewInit() {
-		console.log("hii");
-		this.cdr.detectChanges();
 		this.profileService.updateProfile.subscribe((profileData)=>{
 			this.name=profileData.name;
-			console.log(JSON.stringify(profileData));
 			if(profileData.icon){
 				this.dashboardImage=profileData.icon;
-				console.log(JSON.stringify(profileData));
 			}
 		})
 	}
@@ -133,7 +119,6 @@ export class AppComponent implements OnInit,OnDestroy,OnChanges {
 
 			if(response['data']){
 				this.name=response['data'].name;
-				console.log(this.name);
 			}
 
 			if(response['data']['icon']){
@@ -161,7 +146,7 @@ export class AppComponent implements OnInit,OnDestroy,OnChanges {
 	}
 
 	onCallTap(){
-		const phoneNumber = '8826612940';
+		const phoneNumber = '8800394300';
 		TNSPhone.requestCallPermission('You should accept the permission to be able to make a direct phone call.')
 		.then(() => TNSPhone.dial(phoneNumber, false))
 		.catch(() => TNSPhone.dial(phoneNumber, true));
