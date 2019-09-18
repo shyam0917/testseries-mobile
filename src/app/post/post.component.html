@@ -9,6 +9,10 @@
 	setVolume="1" width="100%"></VideoPlayer>
 </StackLayout>
 
+<!-- <WebView row="0" src='<video id="player" playsinline controls>
+    <source src="{{vr}}" type="video/mp4" /></video>'></WebView> -->
+<!--   <Webview row="0" src='<html> <body> <video controls><source src="{{vr}}" type="video/mp4"></video></body></html>'></Webview> -->
+
 	<Button *ngIf="!showFullscreen && !showDemo" row="1" text="Fullscreen  &#xf0b2;" (tap)="setFullscreen()" class="btn btn-primary m-x-auto fa"></Button>
 
 	<GridLayout *ngIf="!showFullscreen && !showDemo" row="2" columns="*,auto" class="m-x-20">

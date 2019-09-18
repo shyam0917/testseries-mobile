@@ -49,7 +49,6 @@ export class PostComponent implements OnInit,OnDestroy {
 
 
 	ngOnInit(){
-		this.isLoading=true;
 		this.page.actionBarHidden = true;
 		setCurrentOrientation("portrait", function () {
 		});
